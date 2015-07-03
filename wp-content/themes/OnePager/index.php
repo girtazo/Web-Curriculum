@@ -13,10 +13,6 @@
     //Recogida de Opciones Menu
     $sections = get_option( 'option_tree_settings' )["sections"];
     $menu = wp_nav_menu();
-    $theme_settings = get_option("menu");
-    //debug_to_console( $theme_settings );
-    $menu = wp_get_nav_menu_items($theme_settings["menu"]);
-    
     foreach ($sections as $key => $section) {
       ?>
         <li><a href="#<?=$section[id]?>"><?=$section[title]?></a></li>
