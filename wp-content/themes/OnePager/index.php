@@ -12,11 +12,30 @@
     
     //Recogida de Opciones Menu
     $sections = get_option( 'option_tree_settings' )["sections"];
-    $menu = wp_nav_menu();
-    foreach ($sections as $key => $section) {
+    $settings = get_option( 'option_tree_settings' )["settings"];
+    foreach ($settings as $key => $setting) {
+      
+      if( $setting["label"] = "Añadir al Menu Curriculum" ) {
+
+        if( ot_get_option( $setting["id"] ) == "on" ) {
+
+          foreach ($sections as $key => $section) {
+
+            if( $setting["section"] == $section["id"] ) {
+
+              $sections_menu[] = $section;
+            }
+          }
+        }
+      }
+    }
+    wp_nav_menu();
+    if(count($sections_menu)){
+      foreach ($sections_menu as $key => $section_menu) {
       ?>
-        <li><a href="#<?=$section[id]?>"><?=$section[title]?></a></li>
+        <li><a href="#<?=$section_menu[id]?>"><?=$section_menu[title]?></a></li>
       <?php
+      }
     }
     ?>
     </ul>
