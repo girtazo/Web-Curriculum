@@ -13,18 +13,26 @@
     //Recogida de Opciones Menu
     $sections = get_option( 'option_tree_settings' )["sections"];
     $settings = get_option( 'option_tree_settings' )["settings"];
+
+    foreach ($sections as $key => $section) {
+
+      $options_theme[$section["id"]] = $section;
+    }
+
     foreach ($settings as $key => $setting) {
       
-      if( $setting["label"] = "Añadir al Menu Curriculum" ) {
+      $options_theme[$setting["section"]]["settings"][$setting["id"]] = $setting;
+    }
+    
+    foreach ($options_theme as $key => $section) {
 
-        if( ot_get_option( $setting["id"] ) == "on" ) {
+      foreach ($section["settings"] as $key => $setting) {
 
-          foreach ($sections as $key => $section) {
+        if( $setting["label"] = "Añadir al Menu Curriculum" ) {
 
-            if( $setting["section"] == $section["id"] ) {
+         if( ot_get_option( $setting["id"] ) == "on" ) {
 
-              $sections_menu[] = $section;
-            }
+            $sections_menu[] = $section;
           }
         }
       }
@@ -41,7 +49,42 @@
     </ul>
   </div>
   
-  <div id="container"> 
+  <div id="container">
+
+    <?php
+    if(count($sections_menu)){
+      foreach ($sections_menu as $key => $section_menu) {
+      ?>
+        <div class="page" id="<?=$section_menu[id]?>">
+        <?php
+          foreach ($section_menu["settings"] as $key => $setting) {
+            
+            if( $setting["label"] == "Encabezado" ) {
+
+              if ( ot_get_option( $setting["id"] ) != "" ) {
+              ?>
+                <h3 class="page_title"><?php print ot_get_option( $setting["id"] )?></h3>
+              <?php
+              }
+            }
+          }
+        ?>
+          <div class="page_content">
+            <?php
+              foreach ($section_menu["settings"] as $key => $setting) {
+            
+                if( $setting["label"] == "Contenido" ) {
+
+                  print ot_get_option( $setting["id"] );
+                }
+              }
+            ?>
+          </div>
+        </div>
+      <?php
+      }
+    }
+    ?>
     <!-- page container -->
     <div class="page" id="home"> 
       <!-- page home -->
