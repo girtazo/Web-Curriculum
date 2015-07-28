@@ -38,6 +38,9 @@
 	/*Codigo Modificado*/
 	include_once( 'includes/theme-options.php' );
 	/*Fin Codigo Modificado*/
+	/* Meta Boxes*/
+	require( trailingslashit( get_template_directory() ) . 'includes/meta-boxes.php' );
+	
 
 	// Add RSS links to <head> section
 	automatic_feed_links();

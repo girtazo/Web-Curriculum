@@ -13,6 +13,7 @@
     //Recogida de Opciones Menu
     $sections = get_option( 'option_tree_settings' )["sections"];
     $settings = get_option( 'option_tree_settings' )["settings"];
+    debug_to_console($settings);
 
     foreach ($sections as $key => $section) {
 
@@ -28,7 +29,7 @@
 
       foreach ($section["settings"] as $key => $setting) {
 
-        if( $setting["label"] = "Añadir al Menu Curriculum" ) {
+        if( $setting["taxonomy"] = "item_menu" ) {
 
          if( ot_get_option( $setting["id"] ) == "on" ) {
 
@@ -57,29 +58,34 @@
       ?>
         <div class="page" id="<?=$section_menu[id]?>">
         <?php
+          /* Load content setting theme*/
           foreach ($section_menu["settings"] as $key => $setting) {
             
-            if( $setting["label"] == "Encabezado" ) {
+            switch ($setting["taxonomy"]) {
+              
+              case 'header_section':
+                if ( !empty(ot_get_option( $setting["id"] ) ) )  {
 
-              if ( ot_get_option( $setting["id"] ) != "" ) {
-              ?>
-                <h3 class="page_title"><?php print ot_get_option( $setting["id"] )?></h3>
-              <?php
-              }
+                  $header_section = "<h3 class=\"page_title\">".ot_get_option( $setting["id"] )."</h3>";
+                } else
+                  $header_section = "";
+                break;
+
+              case 'content':
+                $content =  "<div class=\"page_content\">\n".ot_get_option( $setting["id"] )."</div>";
+                break;
+
+              default:
+                break;
             }
           }
-        ?>
-          <div class="page_content">
-            <?php
-              foreach ($section_menu["settings"] as $key => $setting) {
-            
-                if( $setting["label"] == "Contenido" ) {
+          /*Show content setting theme*/
 
-                  print ot_get_option( $setting["id"] );
-                }
-              }
-            ?>
-          </div>
+          echo $header_section;
+          echo $content;
+
+        ?>
+
         </div>
       <?php
       }

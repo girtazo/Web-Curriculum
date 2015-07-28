@@ -22,8 +22,8 @@ function _custom_meta_boxes() {
    * the OptionTree Meta Box API Class.
    */
   $my_meta_box = array(
-    'id'          => 'my_meta_box',
-    'title'       => 'Demo Meta Box',
+    'id'          => 'que cojones es',
+    'title'       => 'Mega Titulo',
     'desc'        => '',
     'pages'       => array( 'post' ),
     'context'     => 'normal',
@@ -44,6 +44,17 @@ function _custom_meta_boxes() {
         'label'       => 'Category Checkbox',
         'id'          => 'my_category_checkbox',
         'type'        => 'category-checkbox',
+        'desc'        => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        'std'         => '',
+        'rows'        => '',
+        'post_type'   => '',
+        'taxonomy'    => '',
+        'class'       => ''
+      ),
+      array(
+        'label'       => 'Category Checkbox',
+        'id'          => 'boton',
+        'type'        => 'button',
         'desc'        => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         'std'         => '',
         'rows'        => '',

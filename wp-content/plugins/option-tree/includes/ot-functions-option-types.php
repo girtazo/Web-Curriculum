@@ -32,7 +32,9 @@
 if ( ! function_exists( 'ot_display_by_type' ) ) {
 
   function ot_display_by_type( $args = array() ) {
-    
+    debug_to_console("function -> ot_display_by_type");
+    debug_to_console("--------args-------");
+    debug_to_console($args);
     /* allow filters to be executed on the array */
     $args = apply_filters( 'ot_display_by_type', $args );
     
@@ -3228,6 +3230,82 @@ if ( ! function_exists( 'ot_type_upload' ) ) {
   }
   
 }
+/*Opciones mias personalizadas*/
+if ( ! function_exists( 'ot_type_text_tag' ) ) {
+  
+  function ot_type_text_tag( $args = array() ) {
+    
+    /* turns arguments array into variables */
+    extract( $args );
+    
+    /* verify a description */
+    $has_desc = $field_desc ? true : false;
+    
+    /* format setting outer wrapper */
+    echo '<div class="format-setting type-text ' . ( $has_desc ? 'has-desc' : 'no-desc' ) . '">';
+      
+      /* description */
+      echo $has_desc ? '<div class="description">' . htmlspecialchars_decode( $field_desc ) . '</div>' : '';
+      
+      /* format setting inner wrapper */
+      echo '<div class="format-setting-inner">';
+      
+        /* build text input */
+        echo '<input type="text" name="' . esc_attr( $field_name ) . '" id="' . esc_attr( $field_id ) . '" value="' . esc_attr( $field_value ) . '" class="widefat option-tree-ui-input ' . esc_attr( $field_class ) . '" />';
+        
+        /* add media button */
+        echo '<a href="javascript:void(0);" class="ot_upload_media option-tree-ui-button button button-primary light" rel="' . $post_id . '" title="' . __( 'Add Media', 'option-tree' ) . '"><span class="icon ot-icon-plus-circle"></span>' . __( 'Add Media', 'option-tree' ) . '</a>';
+        echo '<a href="javascript:void(0);" class="ot_upload_media option-tree-ui-button button button-primary light" rel="' . $post_id . '" title="' . __( 'Add Media', 'option-tree' ) . '"><span class="icon ot-icon-plus-circle"></span>' . __( 'Add Media', 'option-tree' ) . '</a>';
+      echo '</div>';
+    
+    echo '</div>';
+    
+    /* format setting outer wrapper */
+    echo '<div class="format-setting type-upload ' . ( $has_desc ? 'has-desc' : 'no-desc' ) . '">';
+      
+      /* description */
+      echo $has_desc ? '<div class="description">' . htmlspecialchars_decode( $field_desc ) . '</div>' : '';
+      
+      /* format setting inner wrapper */
+      echo '<div class="format-setting-inner">';
+      
+        /* build upload */
+        echo '<div class="option-tree-ui-upload-parent">';
+          
+          /* input */
+          echo '<input type="text" name="' . esc_attr( $field_name ) . '" id="' . esc_attr( $field_id ) . '" value="' . esc_attr( $field_value ) . '" class="widefat option-tree-ui-upload-input ' . esc_attr( $field_class ) . '" />';
+          
+          /* add media button */
+          echo '<a href="javascript:void(0);" class="ot_upload_media option-tree-ui-button button button-primary light" rel="' . $post_id . '" title="' . __( 'Add Media', 'option-tree' ) . '"><span class="icon ot-icon-plus-circle"></span>' . __( 'Add Media', 'option-tree' ) . '</a>';
+        
+        echo '</div>';
+        
+        /* media */
+        if ( $field_value ) {
+            
+          echo '<div class="option-tree-ui-media-wrap" id="' . esc_attr( $field_id ) . '_media">';
+            
+            /* replace image src */
+            if ( isset( $field_src ) )
+              $field_value = $field_src;
+              
+            if ( preg_match( '/\.(?:jpe?g|png|gif|ico)$/i', $field_value ) )
+              echo '<div class="option-tree-ui-image-wrap"><img src="' . esc_url( $field_value ) . '" alt="" /></div>';
+            
+            echo '<a href="javascript:(void);" class="option-tree-ui-remove-media option-tree-ui-button button button-secondary light" title="' . __( 'Remove Media', 'option-tree' ) . '"><span class="icon ot-icon-minus-circle"></span>' . __( 'Remove Media', 'option-tree' ) . '</a>';
+            
+          echo '</div>';
+          
+        }
+        
+      echo '</div>';
+    
+    echo '</div>';
+    
+  }
+  
+}
+
 
 /* End of file ot-functions-option-types.php */
 /* Location: ./includes/ot-functions-option-types.php */

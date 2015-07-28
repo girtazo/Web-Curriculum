@@ -2411,7 +2411,7 @@ if ( ! function_exists( 'ot_alert_message' ) ) {
 if ( ! function_exists( 'ot_option_types_array' ) ) {
 
   function ot_option_types_array() {
-  
+    debug_to_console("function -> ot_option_types_array");
     return apply_filters( 'ot_option_types_array', array( 
       'background'                => __('Background', 'option-tree'),
       'border'                    => __('Border', 'option-tree'),
@@ -2451,6 +2451,7 @@ if ( ! function_exists( 'ot_option_types_array' ) ) {
       'tag-select'                => __('Tag Select', 'option-tree'),
       'taxonomy-checkbox'         => __('Taxonomy Checkbox', 'option-tree'),
       'taxonomy-select'           => __('Taxonomy Select', 'option-tree'),
+      'text-tag'                  => __('Text Tag', 'option-tree'),
       'text'                      => __('Text', 'option-tree'),
       'textarea'                  => __('Textarea', 'option-tree'),
       'textarea-simple'           => __('Textarea Simple', 'option-tree'),
@@ -3934,10 +3935,10 @@ if ( ! function_exists( 'ot_normalize_css' ) ) {
 if ( ! function_exists( 'ot_loop_through_option_types' ) ) {
 
   function ot_loop_through_option_types( $type = '', $child = false ) {
-  
+    debug_to_console("function -> ot_loop_through_option_types");
     $content = '';
     $types = ot_option_types_array();
-    
+    debug_to_console($types);
     if ( $child )
       unset($types['list-item']);
     
@@ -4070,7 +4071,7 @@ if ( ! function_exists( 'ot_sections_view' ) ) {
 if ( ! function_exists( 'ot_settings_view' ) ) {
 
   function ot_settings_view( $name, $key, $setting = array() ) {
-    
+    debug_to_console("function -> ot_settings_view");
     $child = ( strpos( $name, '][settings]') !== false ) ? true : false;
     $type = isset( $setting['type'] ) ? $setting['type'] : '';
     $std = isset( $setting['std'] ) ? $setting['std'] : '';
