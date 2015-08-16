@@ -32,6 +32,7 @@
       this.reset_settings();
       this.css_editor_mode();
       this.javascript_editor_mode();
+      this.group_tags();
     },
     init_hide_body: function(elm,type) {
       var css = '.option-tree-setting-body';
@@ -773,6 +774,85 @@
       setTimeout( function() {
         $(this).scrollTop(0);
       }, 50 );
+    },
+    group_tags: function() {
+      $(document).on('click', '.button-add', function(event) {
+        event.preventDefault();
+        
+        data_setting    = $( document ).find( ".data-setting" );
+        name_setting    = $( data_setting ).attr("name");
+        id_setting      = $( data_setting ).attr("id");
+
+        tag_text        = this.parentNode;
+        new_tag_text    = $(this.parentNode).clone();
+
+        group_tags_text = $( document ).find( ".option-tree-group-tags .format-setting-inner" );
+
+        for (var i = group_tags_text.length - 1; i >= 0; i--) {
+
+          if ( group_tags_text[i] != tag_text ) {
+            
+            input = $( document ).find( ".option-tree-group-tags .format-setting-inner input" )[i];
+            $( input ).attr( "name", name_setting + "[" + (i +1) + "]" );
+            $( input ).attr( "id", id_setting + "[" + (i +1) + "]" );
+          } else {
+
+            break;
+          }
+        }
+
+        input = $( new_tag_text ).find( "input" );
+        $( input ).attr( "name", name_setting + "[" + (i +1) + "]" );
+        $( input ).attr( "id", id_setting + "[" + (i +1) + "]" );
+        $( input ).attr( "value", "" );
+
+        if ( $( new_tag_text ).hasClass("first-tag-text") ) {
+
+          $( new_tag_text ).removeClass("first-tag-text");
+        }
+
+        if ( $( new_tag_text ).hasClass("last-tag-text") ) {
+
+          $( tag_text ).removeClass("last-tag-text");
+        }
+
+        $( tag_text ).after(new_tag_text);
+      });
+      $(document).on('click', '.button-remove', function(event) {
+        event.preventDefault();
+        
+        data_setting    = $( document ).find( ".data-setting" );
+        name_setting    = $( data_setting ).attr("name");
+        id_setting      = $( data_setting ).attr("id");
+        
+        tag_text = this.parentNode;
+        tag_text_last = $( document ).find( ".option-tree-group-tags .format-setting-inner" )[group_tags_text.length-1];
+
+        group_tags_text = $( document ).find( ".option-tree-group-tags .format-setting-inner" );
+        
+        for (var i = group_tags_text.length - 1; i >= 0; i--) {
+
+          if ( group_tags_text[i] != tag_text ) {
+            
+            input = $( document ).find( ".option-tree-group-tags .format-setting-inner input" )[i];
+            $( input ).attr( "name", name_setting + "[" + (i -1) + "]" );
+            $( input ).attr( "id", id_setting + "[" + (i -1) + "]" );
+            
+          } else {
+            
+            break;
+          }
+        };
+        
+        if( i = 0 ) {
+
+          $( tag_text_last ).addClass("first-tag-text");
+        }
+        
+        $( tag_text_last ).addClass("last-tag-text");
+        $( tag_text ).detach();
+      
+      });
     }
   };
   $(document).ready( function() {

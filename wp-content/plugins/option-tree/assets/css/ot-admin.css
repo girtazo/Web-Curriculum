@@ -2692,6 +2692,12 @@ select.option-tree-ui-select option {
            box-shadow: inset 0 1px 0 rgba(0,0,0,0.1);
    vertical-align: top;
 }
+.option-tree-ui-button.button-add{
+  margin-top: 0px;
+}
+.option-tree-ui-button.button-remove{
+  margin-top: 0px;
+}
 .option-tree-ui-button.right {
   float: right;
 }
@@ -3651,6 +3657,8 @@ a.ui-datepicker-next {
   background: #444;
   border-color: #111;
 }
+
+
 /* light */
 .admin-color-light .ui-timepicker-div .ui-slider-horizontal .ui-slider-handle {
   background: #888;
@@ -3720,6 +3728,14 @@ a.ui-datepicker-next {
 .admin-color-sunrise .ui-timepicker-div .ui-slider-horizontal .ui-slider-handle.ui-state-active {
   background: #e88436;
   border-color: #e75546;
+}
+
+/* -------------------------------------------------- 
+  :: Groups Tags
+  ---------------------------------------------------*/
+.option-tree-group-tags input{
+  width: calc(100% - 105px) !important;
+  float: left;
 }
 
 /* -------------------------------------------------- 

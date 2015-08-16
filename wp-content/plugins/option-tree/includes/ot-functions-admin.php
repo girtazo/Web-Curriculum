@@ -24,6 +24,7 @@
 if ( ! function_exists( 'ot_register_theme_options_page' ) ) {
 
   function ot_register_theme_options_page() {
+    debug_to_console("function -> ot_register_theme_options_page");
   
     /* get the settings array */
     $get_settings = get_option( ot_settings_id() );
@@ -87,6 +88,7 @@ if ( ! function_exists( 'ot_register_theme_options_page' ) ) {
 if ( ! function_exists( 'ot_register_settings_page' ) ) {
 
   function ot_register_settings_page() {
+    debug_to_console("function -> ot_register_settings_page");
     global $ot_has_custom_theme_options;
     
     // Display UI Builder admin notice
@@ -403,6 +405,7 @@ if ( ! function_exists( 'ot_register_settings_page' ) ) {
 if ( ! function_exists( 'ot_after_theme_options_save' ) ) {
 
   function ot_after_theme_options_save() {
+    debug_to_console("function -> ot_after_theme_options_save");
   
     $page = isset( $_REQUEST['page'] ) ? $_REQUEST['page'] : '';
     $updated = isset( $_REQUEST['settings-updated'] ) && $_REQUEST['settings-updated'] == 'true' ? true : false;
@@ -442,7 +445,7 @@ if ( ! function_exists( 'ot_after_theme_options_save' ) ) {
 if ( ! function_exists( 'ot_validate_setting' ) ) {
 
   function ot_validate_setting( $input, $type, $field_id, $wmpl_id = '' ) {
-    
+    debug_to_console("function -> ot_validate_setting");
     /* exit early if missing data */
     if ( ! $input || ! $type || ! $field_id )
       return $input;
@@ -746,6 +749,7 @@ if ( ! function_exists( 'ot_validate_setting' ) ) {
 if ( ! function_exists( 'ot_admin_styles' ) ) {
 
   function ot_admin_styles() {
+    debug_to_console("function -> ot_admin_styles");
     global $wp_styles, $post;
     
     /* execute styles before actions */
@@ -805,7 +809,7 @@ if ( ! function_exists( 'ot_admin_styles' ) ) {
 if ( ! function_exists( 'ot_admin_scripts' ) ) {
 
   function ot_admin_scripts() {
-    
+    debug_to_console("function -> ot_admin_scripts");
     /* execute scripts before actions */
     do_action( 'ot_admin_scripts_before' );
     
@@ -884,7 +888,7 @@ if ( ! function_exists( 'ot_admin_scripts' ) ) {
 if ( ! function_exists( 'ot_get_media_post_ID' ) ) {
 
   function ot_get_media_post_ID() {
-    
+    debug_to_console("function -> ot_get_media_post_ID");
     // Option ID
     $option_id = 'ot_media_post_ID';
     
@@ -923,6 +927,7 @@ if ( ! function_exists( 'ot_get_media_post_ID' ) ) {
 if ( ! function_exists( 'ot_create_media_post' ) ) {
   
   function ot_create_media_post() {
+    debug_to_console("function -> ot_create_media_post");
     
     $regsiter_post_type = 'register_' . 'post_type';
     $regsiter_post_type( 'option-tree', array(
@@ -973,6 +978,7 @@ if ( ! function_exists( 'ot_create_media_post' ) ) {
 if ( ! function_exists( 'ot_default_settings' ) ) {
 
   function ot_default_settings() {
+    debug_to_console("function -> ot_default_settings");
     global $wpdb;
     
     if ( ! get_option( ot_settings_id() ) ) {
@@ -1131,7 +1137,7 @@ if ( ! function_exists( 'ot_default_settings' ) ) {
 if ( ! function_exists( 'ot_save_css' ) ) {
 
   function ot_save_css( $options ) {
-    
+    debug_to_console("function -> ot_save_css");
     /* grab a copy of the settings */
     $settings = get_option( ot_settings_id() );
       
@@ -1177,6 +1183,7 @@ if ( ! function_exists( 'ot_save_css' ) ) {
 if ( ! function_exists( 'ot_add_xml_to_upload_filetypes' ) ) {
 
   function ot_add_xml_to_upload_filetypes() {
+    debug_to_console("function -> ot_add_xml_to_upload_filetypes");
     
     add_filter( 'upload_mimes', 'ot_upload_mimes' );
     add_filter( 'wp_mime_type_icon', 'ot_xml_mime_type_icon', 10, 2 );
@@ -1197,6 +1204,7 @@ if ( ! function_exists( 'ot_add_xml_to_upload_filetypes' ) ) {
 if ( ! function_exists( 'ot_upload_mimes' ) ) {
 
   function ot_upload_mimes( $mimes ) {
+    debug_to_console("function -> ot_upload_mimes");
   
     $mimes['xml'] = 'application/xml';
     
@@ -1219,6 +1227,7 @@ if ( ! function_exists( 'ot_upload_mimes' ) ) {
 if ( ! function_exists( 'ot_xml_mime_type_icon' ) ) {
 
   function ot_xml_mime_type_icon( $icon, $mime ) {
+    debug_to_console("function -> ot_xml_mime_type_icon");
   
     if ( $mime == 'application/xml' || $mime == 'text/xml' )
       return wp_mime_type_icon( 'document' );
@@ -1240,6 +1249,7 @@ if ( ! function_exists( 'ot_xml_mime_type_icon' ) ) {
 if ( ! function_exists( 'ot_import' ) ) {
 
   function ot_import() {
+    debug_to_console("function -> ot_import");
     
     /* check and verify import xml nonce */
     if ( isset( $_POST['import_xml_nonce'] ) && wp_verify_nonce( $_POST['import_xml_nonce'], 'import_xml_form' ) ) {
@@ -1435,6 +1445,7 @@ if ( ! function_exists( 'ot_import' ) ) {
 if ( ! function_exists( 'ot_export' ) ) {
 
   function ot_export() {
+    debug_to_console("function -> ot_export");
     
     /* check and verify export settings file nonce */
     if ( isset( $_POST['export_settings_file_nonce'] ) && wp_verify_nonce( $_POST['export_settings_file_nonce'], 'export_settings_file_form' ) ) {
@@ -1459,6 +1470,7 @@ if ( ! function_exists( 'ot_export' ) ) {
 if ( ! function_exists( 'ot_import_xml' ) ) {
 
   function ot_import_xml( $file ) {
+    debug_to_console("function -> ot_import_xml");
     
     $get_data = wp_remote_get( $file );
     
@@ -1568,6 +1580,7 @@ if ( ! function_exists( 'ot_import_xml' ) ) {
 if ( ! function_exists( 'ot_export_php_settings_array' ) ) {
 
   function ot_export_php_settings_array() {
+    debug_to_console("function -> ot_export_php_settings_array");
     
     $content              = '';
     $build_settings       = '';
@@ -1578,6 +1591,7 @@ if ( ! function_exists( 'ot_export_php_settings_array' ) ) {
     
     // Domain string helper
     function ot_I18n_string( $string ) {
+
       if ( ! empty( $string ) && isset( $_POST['domain'] ) && ! empty( $_POST['domain'] ) ) {
         $domain = str_replace( ' ', '-', trim( $_POST['domain'] ) );
         return "__( '$string', '$domain' )";
@@ -1846,6 +1860,7 @@ function custom_theme_options() {
 if ( ! function_exists( 'ot_save_settings' ) ) {
 
   function ot_save_settings() {
+    debug_to_console("function -> ot_save_settings");
 
     /* check and verify import settings nonce */
     if ( isset( $_POST['option_tree_settings_nonce'] ) && wp_verify_nonce( $_POST['option_tree_settings_nonce'], 'option_tree_settings_form' ) ) {
@@ -2069,6 +2084,7 @@ if ( ! function_exists( 'ot_save_settings' ) ) {
 if ( ! function_exists( 'ot_validate_settings_array' ) ) {
 
   function ot_validate_settings_array( $settings = array() ) {
+    debug_to_console("function -> ot_validate_settings_array");
     
     /* validate settings */
     if ( count( $settings ) > 0 ) {
@@ -2181,6 +2197,7 @@ if ( ! function_exists( 'ot_validate_settings_array' ) ) {
 if ( ! function_exists( 'ot_modify_layouts' ) ) {
 
   function ot_modify_layouts() {
+    debug_to_console("function -> ot_modify_layouts");
 
     /* check and verify modify layouts nonce */
     if ( isset( $_POST['option_tree_modify_layouts_nonce'] ) && wp_verify_nonce( $_POST['option_tree_modify_layouts_nonce'], 'option_tree_modify_layouts_form' ) ) {
@@ -2295,6 +2312,7 @@ if ( ! function_exists( 'ot_modify_layouts' ) ) {
 if ( ! function_exists( 'ot_alert_message' ) ) {
 
   function ot_alert_message( $page = array() ) {
+    debug_to_console("function -> ot_alert_message");
     
     if ( empty( $page ) )
       return false;
@@ -2451,7 +2469,7 @@ if ( ! function_exists( 'ot_option_types_array' ) ) {
       'tag-select'                => __('Tag Select', 'option-tree'),
       'taxonomy-checkbox'         => __('Taxonomy Checkbox', 'option-tree'),
       'taxonomy-select'           => __('Taxonomy Select', 'option-tree'),
-      'text-tag'                  => __('Text Tag', 'option-tree'),
+      'group-tags'                => __('Group Tags', 'option-tree'),
       'text'                      => __('Text', 'option-tree'),
       'textarea'                  => __('Textarea', 'option-tree'),
       'textarea-simple'           => __('Textarea Simple', 'option-tree'),
@@ -3965,6 +3983,7 @@ if ( ! function_exists( 'ot_loop_through_option_types' ) ) {
 if ( ! function_exists( 'ot_loop_through_choices' ) ) {
 
   function ot_loop_through_choices( $name, $choices = array() ) {
+    debug_to_console("function -> ot_loop_through_choices");
     
     $content = '';
     
@@ -3990,6 +4009,7 @@ if ( ! function_exists( 'ot_loop_through_choices' ) ) {
 if ( ! function_exists( 'ot_loop_through_sub_settings' ) ) {
 
   function ot_loop_through_sub_settings( $name, $settings = array() ) {
+    debug_to_console("function -> ot_loop_through_sub_settings");
     
     $content = '';
     
@@ -4018,6 +4038,7 @@ if ( ! function_exists( 'ot_loop_through_sub_settings' ) ) {
 if ( ! function_exists( 'ot_sections_view' ) ) {
 
   function ot_sections_view( $name, $key, $section = array() ) {
+    debug_to_console("function -> ot_sections_view");
   
     return '
     <div class="option-tree-setting is-section">
@@ -4250,6 +4271,7 @@ if ( ! function_exists( 'ot_settings_view' ) ) {
 if ( ! function_exists( 'ot_choices_view' ) ) {
 
   function ot_choices_view( $name, $key, $choice = array() ) {
+    debug_to_console("function -> ot_choices_view");
   
     return '
     <div class="option-tree-setting">
@@ -4316,6 +4338,7 @@ if ( ! function_exists( 'ot_choices_view' ) ) {
 if ( ! function_exists( 'ot_contextual_help_view' ) ) {
 
   function ot_contextual_help_view( $name, $key, $content = array() ) {
+    debug_to_console("function -> ot_contextual_help_view");
   
     return '
     <div class="option-tree-setting">
@@ -4375,6 +4398,7 @@ if ( ! function_exists( 'ot_contextual_help_view' ) ) {
 if ( ! function_exists( 'ot_layout_view' ) ) {
 
   function ot_layout_view( $key, $data = '', $active_layout = '' ) {
+    debug_to_console("function -> ot_layout_view");
 
     return '
     <div class="option-tree-setting">
@@ -4412,7 +4436,8 @@ if ( ! function_exists( 'ot_layout_view' ) ) {
 if ( ! function_exists( 'ot_list_item_view' ) ) {
 
   function ot_list_item_view( $name, $key, $list_item = array(), $post_id = 0, $get_option = '', $settings = array(), $type = '' ) {
-    
+    debug_to_console("function -> ot_list_item_view");
+
     /* required title setting */
     $required_setting = array(
       array(

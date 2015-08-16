@@ -3230,11 +3230,17 @@ if ( ! function_exists( 'ot_type_upload' ) ) {
   }
   
 }
+
 /*Opciones mias personalizadas*/
-if ( ! function_exists( 'ot_type_text_tag' ) ) {
+if ( ! function_exists( 'ot_type_group_tags' ) ) {
   
-  function ot_type_text_tag( $args = array() ) {
+  function ot_type_group_tags( $args = array() ) {
     
+    $settings = get_option( 'option_tree_settings' )["settings"];
+    debug_to_console( "-------------settings-------------" );
+    debug_to_console( $settings );
+    debug_to_console( "-------------args-------------" );
+    debug_to_console( $args );
     /* turns arguments array into variables */
     extract( $args );
     
@@ -3242,63 +3248,72 @@ if ( ! function_exists( 'ot_type_text_tag' ) ) {
     $has_desc = $field_desc ? true : false;
     
     /* format setting outer wrapper */
-    echo '<div class="format-setting type-text ' . ( $has_desc ? 'has-desc' : 'no-desc' ) . '">';
+    echo '<div class="format-setting type-text option-tree-group-tags ' . ( $has_desc ? 'has-desc' : 'no-desc' ) . '">';
       
       /* description */
       echo $has_desc ? '<div class="description">' . htmlspecialchars_decode( $field_desc ) . '</div>' : '';
       
-      /* format setting inner wrapper */
-      echo '<div class="format-setting-inner">';
+      echo '<input type="hidden" name="' . esc_attr( $field_name ) . '" id="' . esc_attr( $field_id ) . '" class="data-setting" />';
       
-        /* build text input */
-        echo '<input type="text" name="' . esc_attr( $field_name ) . '" id="' . esc_attr( $field_id ) . '" value="' . esc_attr( $field_value ) . '" class="widefat option-tree-ui-input ' . esc_attr( $field_class ) . '" />';
+      $num_text_tags = count( $field_value );
+      
+      if ( $num_text_tags > 1 ) {
+
+        foreach ( $field_value as $num_text_tag => $text_tag ) {
+
+          switch ( $num_text_tag +1 ) {
+            case 1:
+              $class = "first-tag-text";
+              $icon = "ot-icon-minus-circle";
+              break;
+            case $num_text_tags:
+              $class = "last-tag-text";
+              $icon = "ot-icon-plus-circle";
+              break;            
+            default:
+              $class = "";
+              break;
+          }
         
-        /* add media button */
-        echo '<a href="javascript:void(0);" class="ot_upload_media option-tree-ui-button button button-primary light" rel="' . $post_id . '" title="' . __( 'Add Media', 'option-tree' ) . '"><span class="icon ot-icon-plus-circle"></span>' . __( 'Add Media', 'option-tree' ) . '</a>';
-        echo '<a href="javascript:void(0);" class="ot_upload_media option-tree-ui-button button button-primary light" rel="' . $post_id . '" title="' . __( 'Add Media', 'option-tree' ) . '"><span class="icon ot-icon-plus-circle"></span>' . __( 'Add Media', 'option-tree' ) . '</a>';
-      echo '</div>';
-    
-    echo '</div>';
-    
-    /* format setting outer wrapper */
-    echo '<div class="format-setting type-upload ' . ( $has_desc ? 'has-desc' : 'no-desc' ) . '">';
-      
-      /* description */
-      echo $has_desc ? '<div class="description">' . htmlspecialchars_decode( $field_desc ) . '</div>' : '';
-      
-      /* format setting inner wrapper */
-      echo '<div class="format-setting-inner">';
-      
-        /* build upload */
-        echo '<div class="option-tree-ui-upload-parent">';
+          /* format setting inner wrapper */
           
-          /* input */
-          echo '<input type="text" name="' . esc_attr( $field_name ) . '" id="' . esc_attr( $field_id ) . '" value="' . esc_attr( $field_value ) . '" class="widefat option-tree-ui-upload-input ' . esc_attr( $field_class ) . '" />';
+          echo '<div class="format-setting-inner '.$class.'">';
           
-          /* add media button */
-          echo '<a href="javascript:void(0);" class="ot_upload_media option-tree-ui-button button button-primary light" rel="' . $post_id . '" title="' . __( 'Add Media', 'option-tree' ) . '"><span class="icon ot-icon-plus-circle"></span>' . __( 'Add Media', 'option-tree' ) . '</a>';
+            /* build text input */
+            echo '<input type="text" name="' . esc_attr( $field_name ) . '['.$num_text_tag.']" id="' . esc_attr( $field_id ) . '_'.$num_text_tag.'" value="' . esc_attr( $text_tag ) . '" class="widefat option-tree-ui-input' . esc_attr( $field_class ) . '" />';
         
-        echo '</div>';
-        
-        /* media */
-        if ( $field_value ) {
+            /* remove button */
+            echo '<button class="option-tree-ui-button button-remove button button-primary icon ot-icon-minus-circle">'.$field_title.'</button>';
             
-          echo '<div class="option-tree-ui-media-wrap" id="' . esc_attr( $field_id ) . '_media">';
-            
-            /* replace image src */
-            if ( isset( $field_src ) )
-              $field_value = $field_src;
-              
-            if ( preg_match( '/\.(?:jpe?g|png|gif|ico)$/i', $field_value ) )
-              echo '<div class="option-tree-ui-image-wrap"><img src="' . esc_url( $field_value ) . '" alt="" /></div>';
-            
-            echo '<a href="javascript:(void);" class="option-tree-ui-remove-media option-tree-ui-button button button-secondary light" title="' . __( 'Remove Media', 'option-tree' ) . '"><span class="icon ot-icon-minus-circle"></span>' . __( 'Remove Media', 'option-tree' ) . '</a>';
+            /* add button */
+            echo '<button class="option-tree-ui-button button-add button button-primary icon ot-icon-plus-circle">'.$field_title.'</button>';
             
           echo '</div>';
-          
+      
         }
+
+      } else {
+
+        if ( is_array( $field_value ) ) {
+          
+          $field_value = $field_value[0];
+        }
+
+        /* format setting inner wrapper */
+        echo '<div class="format-setting-inner first-tag-text last-tag-text">';
+          
+          /* build text input */
+          echo '<input type="text" name="' . esc_attr( $field_name ) . '[0]" id="' . esc_attr( $field_id ) . '_0" value="' . esc_attr( $field_value ) . '" class="widefat option-tree-ui-input' . esc_attr( $field_class ) . '" />';
         
-      echo '</div>';
+          /* add media button */
+          echo '<button class="option-tree-ui-button button-add button button-primary icon ot-icon-plus-circle">'.$field_title.'</button>';
+      
+        echo '</div>';
+
+      }
+      
+      
+      
     
     echo '</div>';
     
