@@ -10,11 +10,11 @@
     <ul id="navigation">
     <?php 
     
-    //Recogida de Opciones Menu
+    // Recogida de Opciones Menu
     $sections = get_option( 'option_tree_settings' )["sections"];
     $settings = get_option( 'option_tree_settings' )["settings"];
-    debug_to_console($settings);
-
+    
+    // C de Opciones de Tema
     foreach ($sections as $key => $section) {
 
       $options_theme[$section["id"]] = $section;
@@ -25,6 +25,11 @@
       $options_theme[$setting["section"]]["settings"][$setting["id"]] = $setting;
     }
     
+    /** 
+    * Construccion de Opciones de Tema
+    * @option_theme array
+    * desc - theme options
+    */
     foreach ($options_theme as $key => $section) {
 
       foreach ($section["settings"] as $key => $setting) {
@@ -38,7 +43,9 @@
         }
       }
     }
+
     wp_nav_menu();
+
     if(count($sections_menu)){
       foreach ($sections_menu as $key => $section_menu) {
       ?>
@@ -52,27 +59,60 @@
   
   <div id="container">
 
+    
     <?php
-    if(count($sections_menu)){
+    if( count($options_theme) ){
       foreach ($sections_menu as $key => $section_menu) {
       ?>
         <div class="page" id="<?=$section_menu[id]?>">
         <?php
           /* Load content setting theme*/
           foreach ($section_menu["settings"] as $key => $setting) {
-            
+
+            $content = '';
+            $header_section = '';
+
             switch ($setting["taxonomy"]) {
-              
+
               case 'header_section':
+                
                 if ( !empty(ot_get_option( $setting["id"] ) ) )  {
 
-                  $header_section = "<h3 class=\"page_title\">".ot_get_option( $setting["id"] )."</h3>";
-                } else
-                  $header_section = "";
+                  $header_section = '<h3 class="page_title">'.ot_get_option( $setting["id"] ).'</h3>';
+                }
                 break;
 
-              case 'content':
-                $content =  "<div class=\"page_content\">\n".ot_get_option( $setting["id"] )."</div>";
+              case 'HTML':
+                $content =  '<div class="page_content">'.ot_get_option( $setting["id"] ).'</div>';
+                break;
+
+              case 'group_tags':
+                $content =  '<div class="page_content">'.ot_get_option( $setting["id"] ).'</div>';
+                break;
+
+              case 'group_tags_numeric':
+
+                $tags = ot_get_option( $setting[ "id" ] );
+                $content = '
+                <div class="page_content">
+                  <div class="two_fourth">';
+                foreach ($tags as $number_tag => $tag) {
+            
+                  $content .= '
+                    <div class="column_content">
+                      <h4 class="blue">'.$tag['skill'].'</h4>
+                      <input class="knob" 
+                        data-displayprevious="true"
+                        data-readonly="true" 
+                        data-linecap="round" 
+                        data-bgcolor="#000000" 
+                        data-fgcolor="#ffffff" 
+                        value="'.$tag['numeric'].'">
+                    </div>';
+                }
+                $content .= 
+                    '</div>
+                  <div>';
                 break;
 
               default:
@@ -96,7 +136,7 @@
       <!-- page home -->
       <div class="page_content">
 
-        <?php $enableslider=ot_get_option('my_checkbox');if ( $enableslider[0]=='yes' ) { ?>
+        <?php $enableslider = ot_get_option('my_checkbox'); if ( $enableslider[0] == 'yes' ) { ?>
           
           <div class="gf-slider"> 
             <!-- slider -->

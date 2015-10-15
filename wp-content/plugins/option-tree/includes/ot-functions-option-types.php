@@ -3253,23 +3253,24 @@ if ( ! function_exists( 'ot_type_group_tags' ) ) {
       /* description */
       echo $has_desc ? '<div class="description">' . htmlspecialchars_decode( $field_desc ) . '</div>' : '';
       
-      echo '<input type="hidden" name="' . esc_attr( $field_name ) . '" id="' . esc_attr( $field_id ) . '" class="data-setting" />';
+      echo '<input type="hidden" name="' . esc_attr( $field_name ) . '" id="' . esc_attr( $field_id ) . '" class="data-setting-group-tags" />';
       
       $num_text_tags = count( $field_value );
-      
+        
       if ( $num_text_tags > 1 ) {
 
         foreach ( $field_value as $num_text_tag => $text_tag ) {
 
           switch ( $num_text_tag +1 ) {
+
             case 1:
-              $class = "first-tag-text";
-              $icon = "ot-icon-minus-circle";
+              $class = "first-tag";
               break;
+
             case $num_text_tags:
-              $class = "last-tag-text";
-              $icon = "ot-icon-plus-circle";
-              break;            
+              $class = "last-tag";
+              break;
+
             default:
               $class = "";
               break;
@@ -3280,7 +3281,7 @@ if ( ! function_exists( 'ot_type_group_tags' ) ) {
           echo '<div class="format-setting-inner '.$class.'">';
           
             /* build text input */
-            echo '<input type="text" name="' . esc_attr( $field_name ) . '['.$num_text_tag.']" id="' . esc_attr( $field_id ) . '_'.$num_text_tag.'" value="' . esc_attr( $text_tag ) . '" class="widefat option-tree-ui-input' . esc_attr( $field_class ) . '" />';
+            echo '<input type="text" name="' . esc_attr( $field_name ) . '['.$num_text_tag.']" placeholder="Habilidad" id="' . esc_attr( $field_id ) . '_'.$num_text_tag.'" value="' . esc_attr( $text_tag ) . '" class="widefat option-tree-ui-input' . esc_attr( $field_class ) . '" />';
         
             /* remove button */
             echo '<button class="option-tree-ui-button button-remove button button-primary icon ot-icon-minus-circle">'.$field_title.'</button>';
@@ -3289,7 +3290,6 @@ if ( ! function_exists( 'ot_type_group_tags' ) ) {
             echo '<button class="option-tree-ui-button button-add button button-primary icon ot-icon-plus-circle">'.$field_title.'</button>';
             
           echo '</div>';
-      
         }
 
       } else {
@@ -3300,10 +3300,10 @@ if ( ! function_exists( 'ot_type_group_tags' ) ) {
         }
 
         /* format setting inner wrapper */
-        echo '<div class="format-setting-inner first-tag-text last-tag-text">';
+        echo '<div class="format-setting-inner first-tag last-tag">';
           
           /* build text input */
-          echo '<input type="text" name="' . esc_attr( $field_name ) . '[0]" id="' . esc_attr( $field_id ) . '_0" value="' . esc_attr( $field_value ) . '" class="widefat option-tree-ui-input' . esc_attr( $field_class ) . '" />';
+          echo '<input type="text" name="' . esc_attr( $field_name ) . '[0]" placeholder="Habilidad" id="' . esc_attr( $field_id ) . '_0" value="' . esc_attr( $field_value ) . '" class="widefat option-tree-ui-input' . esc_attr( $field_class ) . '" />';
         
           /* add media button */
           echo '<button class="option-tree-ui-button button-add button button-primary icon ot-icon-plus-circle">'.$field_title.'</button>';
@@ -3312,15 +3312,108 @@ if ( ! function_exists( 'ot_type_group_tags' ) ) {
 
       }
       
-      
-      
-    
     echo '</div>';
     
   }
   
 }
 
+if ( ! function_exists( 'ot_type_group_tags_numeric' ) ) {
+  
+  function ot_type_group_tags_numeric( $args = array() ) {
+    
+    $settings = get_option( 'option_tree_settings' )["settings"];
+    debug_to_console( "-------------settings-------------" );
+    debug_to_console( $settings );
+    debug_to_console( "-------------args-------------" );
+    debug_to_console( $args );
+    /* turns arguments array into variables */
+    extract( $args );
+    
+    /* verify a description */
+    $has_desc = $field_desc ? true : false;
+    
+    /* format setting outer wrapper */
+    echo '<div class="format-setting type-text option-tree-group-tags-numeric ' . ( $has_desc ? 'has-desc' : 'no-desc' ) . '">';
+      
+      /* description */
+      echo $has_desc ? '<div class="description">' . htmlspecialchars_decode( $field_desc ) . '</div>' : '';
+      
+      echo '<input type="hidden" name="' . esc_attr( $field_name ) . '" id="' . esc_attr( $field_id ) . '" class="data-setting-group-tags-numeric" />';
+      
+      $num_text_tags = count( $field_value );
+      
+      if ( $num_text_tags > 1 ) {
 
+        foreach ( $field_value as $num_text_tag => $text_tag ) {
+
+          switch ( $num_text_tag +1 ) {
+
+            case 1:
+              $class = "first-tag";
+              break;
+
+            case $num_text_tags:
+              $class = "last-tag";
+              break;
+
+            default:
+              $class = "";
+              break;
+          }
+        
+          /* format setting inner wrapper */
+          
+          echo '<div class="format-setting-inner '.$class.'">';
+            
+            /* build text input */
+            echo '<input type="text" class="option-tree-ui-input' . esc_attr( $field_class ) . '" id="' . esc_attr( $field_id ) . '_'.$num_text_tag.'_skill" name="' . esc_attr( $field_name ) . '['.$num_text_tag.'][skill]" placeholder="Habilidad" value="' . esc_attr( $text_tag["skill"] ) . '" />';
+            echo '<img class="decrement" alt="minus" src="'.OT_URL.'/assets/images/icon-minus.png"/>';
+            echo '<input type="text" class="numeric option-tree-ui-input' . esc_attr( $field_class ) . '" id="' . esc_attr( $field_id ) . '_'.$num_text_tag.'_numeric" name="' . esc_attr( $field_name ) . '['.$num_text_tag.'][numeric]" placeholder="Porcentaje" readonly maxlength=4 min=0 max=100 value="' . esc_attr( $text_tag["numeric"] ) . '" />';
+            echo '<img class="increase" alt="plus" src="'.OT_URL.'/assets/images/icon-plus.png"/>';
+            
+            /* remove button tag */
+            echo '<button class="option-tree-ui-button button-remove button button-primary icon ot-icon-minus-circle">'.$field_title.'</button>';
+            
+            /* add button tag */
+            echo '<button class="option-tree-ui-button button-add button button-primary icon ot-icon-plus-circle">'.$field_title.'</button>';
+            
+          echo '</div>';
+      
+        }
+
+      } else {
+
+        /* Initial value */
+        if ( is_array( $field_value ) ) {
+          
+          $field_value = $field_value[0];
+        } else {
+
+          $field_value            = [];
+          $field_value["numeric"] = 0;
+          $field_value["numeric"] = $field_value["numeric"]."%";
+        }
+
+        /* format setting inner wrapper */
+        echo '<div class="format-setting-inner first-tag last-tag">';
+          
+          /* build tag */
+          echo '<input type="text" class="option-tree-ui-input' . esc_attr( $field_class ) . '" id="' . esc_attr( $field_id ) . '_0_skill" name="' . esc_attr( $field_name ) . '[0][skill]" placeholder="Habilidad" value="' . esc_attr( $field_value["skill"] ) . '" />';
+          echo '<img class="decrement" alt="minus" src="'.OT_URL.'/assets/images/icon-minus.png"/>';
+          echo '<input type="text" class="numeric option-tree-ui-input' . esc_attr( $field_class ) . '" id="' . esc_attr( $field_id ) . '_0_numeric" name="' . esc_attr( $field_name ) . '[0][numeric]" placeholder="Porcentaje" readonly maxlength=4 min=0 max=100 value="' . esc_attr( $field_value["numeric"] ) . '" />';
+          echo '<img class="increase" alt="plus" src="'.OT_URL.'/assets/images/icon-plus.png"/>';
+
+          /* add button tag */
+          echo '<button class="option-tree-ui-button button-add button button-primary icon ot-icon-plus-circle">'.$field_title.'</button>';
+      
+        echo '</div>';
+      }
+      
+    echo '</div>';
+    
+  }
+  
+}
 /* End of file ot-functions-option-types.php */
 /* Location: ./includes/ot-functions-option-types.php */

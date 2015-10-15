@@ -33,6 +33,7 @@
       this.css_editor_mode();
       this.javascript_editor_mode();
       this.group_tags();
+      this.group_tags_numeric();
     },
     init_hide_body: function(elm,type) {
       var css = '.option-tree-setting-body';
@@ -776,67 +777,206 @@
       }, 50 );
     },
     group_tags: function() {
-      $(document).on('click', '.button-add', function(event) {
+      $( document ).on( 'click', '.option-tree-group-tags .button-add', function( event ) {
         event.preventDefault();
         
-        data_setting    = $( document ).find( ".data-setting" );
+        /* Recoger configuracion del plugin */
+        data_setting    = $( document ).find( ".data-setting-group-tags" );
         name_setting    = $( data_setting ).attr("name");
         id_setting      = $( data_setting ).attr("id");
 
-        tag_text        = this.parentNode;
-        new_tag_text    = $(this.parentNode).clone();
+        /* Array de etiquetas */
+        group_tags = $( document ).find( ".option-tree-group-tags .format-setting-inner" );
 
-        group_tags_text = $( document ).find( ".option-tree-group-tags .format-setting-inner" );
+        /* Etiqueta actual */
+        tag = this.parentNode;
 
-        for (var i = group_tags_text.length - 1; i >= 0; i--) {
+        /* Añadiendo boton de eliminacion cuando hay mas de una etiqueta */
+        if( group_tags.length == 1 ){
 
-          if ( group_tags_text[i] != tag_text ) {
-            
-            input = $( document ).find( ".option-tree-group-tags .format-setting-inner input" )[i];
-            $( input ).attr( "name", name_setting + "[" + (i +1) + "]" );
-            $( input ).attr( "id", id_setting + "[" + (i +1) + "]" );
+          skill = $( tag ).find( "input" );
+          $( skill ).after('<button class="option-tree-ui-button button-remove button button-primary icon ot-icon-minus-circle"></button>');
+        }
+
+        /* Clonando etiqueta actual */
+        new_tag    = $(this.parentNode).clone();
+        
+        /* Obtenemos el numero etiqueta actual */
+        for (var number_tag = group_tags.length - 1; number_tag >= 0; number_tag--) {
+
+          if ( group_tags[ number_tag ] != tag ) {
+
+            /* Actualizar informacion por encima de la etiqueta actual */
+            input = $( document ).find( ".option-tree-group-tags .format-setting-inner input" )[ number_tag ];
+            $( input ).attr( "name", name_setting + "[" + ( number_tag +1) + "]" );
+            $( input ).attr( "id", id_setting + "_" + ( number_tag +1) );
           } else {
 
             break;
           }
         }
 
-        input = $( new_tag_text ).find( "input" );
-        $( input ).attr( "name", name_setting + "[" + (i +1) + "]" );
-        $( input ).attr( "id", id_setting + "[" + (i +1) + "]" );
+        /* Preparar informacion para nueva etiqueta */
+        input = $( new_tag ).find( "input" );
+        $( input ).attr( "name", name_setting + "[" + ( number_tag +1) + "]" );
+        $( input ).attr( "id", id_setting + "_" + ( number_tag +1) );
         $( input ).attr( "value", "" );
 
-        if ( $( new_tag_text ).hasClass("first-tag-text") ) {
+        if ( $( new_tag ).hasClass("first-tag") ) {
 
-          $( new_tag_text ).removeClass("first-tag-text");
+          $( new_tag ).removeClass("first-tag");
         }
 
-        if ( $( new_tag_text ).hasClass("last-tag-text") ) {
+        if ( $( new_tag ).hasClass("last-tag") ) {
 
-          $( tag_text ).removeClass("last-tag-text");
+          $( tag ).removeClass("last-tag");
         }
 
-        $( tag_text ).after(new_tag_text);
+        /* Añadiendo nueva etiqueta */
+        $( tag ).after( new_tag) ;
       });
-      $(document).on('click', '.button-remove', function(event) {
+      $( document ).on( 'click', '.option-tree-group-tags .button-remove', function( event ) {
         event.preventDefault();
         
-        data_setting    = $( document ).find( ".data-setting" );
+        /* Recoger configuracion del plugin */
+        data_setting    = $( document ).find( ".data-setting-group-tags" );
         name_setting    = $( data_setting ).attr("name");
         id_setting      = $( data_setting ).attr("id");
         
-        tag_text = this.parentNode;
-        tag_text_last = $( document ).find( ".option-tree-group-tags .format-setting-inner" )[group_tags_text.length-1];
-
-        group_tags_text = $( document ).find( ".option-tree-group-tags .format-setting-inner" );
+        /* Array de etiquetas */
+        group_tags = $( document ).find( ".option-tree-group-tags .format-setting-inner" );
         
-        for (var i = group_tags_text.length - 1; i >= 0; i--) {
+        /* Etiqueta actual */
+        tag = this.parentNode;
 
-          if ( group_tags_text[i] != tag_text ) {
+        /* Obtenemos el numero etiqueta actual */
+        for (var number_tag = group_tags.length - 1; number_tag >= 0; number_tag--) {
+
+          if ( group_tags[ number_tag ] != tag ) {
             
-            input = $( document ).find( ".option-tree-group-tags .format-setting-inner input" )[i];
-            $( input ).attr( "name", name_setting + "[" + (i -1) + "]" );
-            $( input ).attr( "id", id_setting + "[" + (i -1) + "]" );
+            /* Actualizar informacion por encima de la etiqueta actual */
+            input = $( document ).find( ".option-tree-group-tags .format-setting-inner input" )[ number_tag ];
+            $( input ).attr( "name", name_setting + "[" + ( number_tag -1) + "]" );
+            $( input ).attr( "id", id_setting + "_" + ( number_tag -1) );
+            
+          } else {
+            
+            break;
+          }
+        };
+
+        /* Eliminando etiqueta */
+        $( tag ).detach();
+
+        /* Ultima etiqueta del grupo */
+        tag_last = $( document ).find( ".option-tree-group-tags .format-setting-inner" )[group_tags.length-2];
+
+        /* Comprobando si la ultima etiqueta es la unica etiqueta */
+        if( group_tags.length-1 == 1 ) {
+
+          $( tag_last ).addClass("first-tag");
+          $( tag_last ).find( ".button-remove" ).detach();
+        }
+        
+        $( tag_last ).addClass("last-tag");
+      });
+    },
+    group_tags_numeric: function() {
+      this.Interval = {};
+      $( document ).on( 'click', '.option-tree-group-tags-numeric .button-add', function( event ) {
+        event.preventDefault();
+        
+        /* Recoger configuracion del plugin */
+        data_setting    = $( document ).find( ".data-setting-group-tags-numeric" );
+        name_setting    = $( data_setting ).attr("name");
+        id_setting      = $( data_setting ).attr("id");
+
+        new_tag    = $(this.parentNode).clone();
+
+        /* Array de etiquetas */
+        group_tags = $( document ).find( ".option-tree-group-tags-numeric .format-setting-inner" );
+
+        /* Etiqueta actual */
+        tag        = this.parentNode;
+
+        /* Añadiendo boton de eliminacion cuando hay mas de una etiqueta */
+        if( group_tags.length == 1 ){
+
+          icon = $( tag ).find( "img.increase" );
+          $( icon ).after('<button class="option-tree-ui-button button-remove button button-primary icon ot-icon-minus-circle"></button>');
+        }
+
+        /* Clonando etiqueta actual */
+        new_tag    = $(this.parentNode).clone();
+        
+        /* Obtenemos el numero etiqueta actual */
+        for (var number_tag = group_tags.length - 1; number_tag >= 0; number_tag--) {
+
+          if ( group_tags[ number_tag ] != tag ) {
+
+            /* Actualizar informacion por encima de la etiqueta actual */
+            input = $( document ).find( ".option-tree-group-tags-numeric .format-setting-inner input:not(.numeric)" )[ number_tag ];
+            $( input ).attr( "name", name_setting + "[" + ( number_tag +1) + "][skill]" );
+            $( input ).attr( "id", id_setting + "_" + ( number_tag +1) + "_skill" );
+            input = $( document ).find( ".option-tree-group-tags-numeric .format-setting-inner input.numeric" )[ number_tag ];
+            $( input ).attr( "name", name_setting + "[" + ( number_tag +1) + "][numeric]" );
+            $( input ).attr( "id", id_setting + "_" + ( number_tag +1) + "numeric" );
+
+          } else {
+
+            break;
+          }
+        }
+
+        /* Preparar informacion para nueva etiqueta */
+        input = $( new_tag ).find( "input:not(.numeric)" );
+        $( input ).attr( "name", name_setting + "[" + ( number_tag +1) + "][skill]" );
+        $( input ).attr( "id", id_setting + "_" + ( number_tag +1) + "_skill" );
+        $( input ).attr( "value", "" );
+        input = $( new_tag ).find( "input.numeric" );
+        $( input ).attr( "name", name_setting + "[" + ( number_tag +1) + "][numeric]" );
+        $( input ).attr( "id", id_setting + "_" + ( number_tag +1) + "_numeric" );
+        $( input ).attr( "value", "0%" );
+
+        if ( $( new_tag ).hasClass("first-tag") ) {
+
+          $( new_tag ).removeClass("first-tag");
+        }
+
+        if ( $( new_tag ).hasClass("last-tag") ) {
+
+          $( tag ).removeClass("last-tag");
+        }
+
+        /* Añadiendo nueva etiqueta */
+        $( tag ).after(new_tag);
+      });
+      $( document ).on( 'click', '.option-tree-group-tags-numeric .button-remove', function( event ) {
+        event.preventDefault();
+        
+        /* Recoger configuracion del plugin */
+        data_setting    = $( document ).find( ".data-setting-group-tags-numeric" );
+        name_setting    = $( data_setting ).attr("name");
+        id_setting      = $( data_setting ).attr("id");
+        
+        /* Array de etiquetas */
+        group_tags = $( document ).find( ".option-tree-group-tags-numeric .format-setting-inner" );
+        
+        /* Etiqueta actual */
+        tag = this.parentNode;
+        
+        /* Obtenemos el numero etiqueta actual */
+        for (var number_tag = group_tags.length - 1; number_tag >= 0; number_tag--) {
+
+          if ( group_tags[ number_tag ] != tag ) {
+            
+            /* Actualizar informacion por encima de la etiqueta actual */
+            input = $( document ).find( ".option-tree-group-tags-numeric .format-setting-inner input:not(.numeric)" )[ number_tag ];
+            $( input ).attr( "name", name_setting + "[" + ( number_tag -1) + "][skill]" );
+            $( input ).attr( "id", id_setting + "_" + ( number_tag -1) + "_skill" );
+            input = $( document ).find( ".option-tree-group-tags-numeric .format-setting-inner input.numeric" )[ number_tag ];
+            $( input ).attr( "name", name_setting + "[" + ( number_tag -1) + "][numeric]" );
+            $( input ).attr( "id", id_setting + "_" + ( number_tag -1) + "_numeric" );
             
           } else {
             
@@ -844,16 +984,150 @@
           }
         };
         
-        if( i = 0 ) {
+        /* Eliminando etiqueta */
+        $( tag ).detach();
 
-          $( tag_text_last ).addClass("first-tag-text");
+        /* Ultima etiqueta del grupo */
+        tag_last = $( document ).find( ".option-tree-group-tags-numeric .format-setting-inner" )[group_tags.length-2];
+
+        /* Comprobando si la ultima etiqueta es la unica etiqueta */
+        if( group_tags.length-1 == 1 ) {
+
+          $( tag_last ).addClass("first-tag");
+          $( tag_last ).find( ".button-remove" ).detach();
         }
         
-        $( tag_text_last ).addClass("last-tag-text");
-        $( tag_text ).detach();
-      
+        $( tag_last ).addClass("last-tag");
       });
-    }
+      $( document ).on( 'click', '.option-tree-group-tags-numeric .increase', function( event ) {
+        event.preventDefault();
+        
+        /* Etiqueta actual */
+        tag_numeric = $( this ).prev();  
+        
+        /* Obtener el numero del valor */
+        value = $( tag_numeric ).attr( "value" );
+        number =  parseInt( value.substr( 0, value.length - 1 ) ) + 1;
+
+        max = parseInt( $( tag_numeric ).attr( "max" ) );
+
+        if( max >= number ) {
+
+          /* Actualizar valor de la etiqueta numerica */
+          value = number.toString() + "%";
+          $( tag_numeric ).attr( "value", value );
+        }
+      });
+      $( document ).on( 'click', '.option-tree-group-tags-numeric .decrement', function( event ) {
+        event.preventDefault();
+        
+        /* Etiqueta actual */
+        tag_numeric = $( this ).prev();
+
+        /* Obtener el numero del valor */
+        value = $( tag_numeric ).attr( "value" );
+        number =  parseInt( value.substr( 0, value.length - 1 ) ) - 1;
+
+        min = parseInt( $( tag_numeric ).attr( "min" ) );
+
+        if( min <= number ) {
+
+          /* Actualizar valor de la etiqueta numerica */
+          value = number.toString() + "%";
+          $( tag_numeric ).attr( "value", value );
+        }
+      });
+      $( document ).on( 'mousedown', '.option-tree-group-tags-numeric .increase', function( event ) {
+        event.preventDefault();
+
+        function increase(){
+          
+          /* Obtener el numero del valor */
+          value = $( document ).find( ".option-tree-group-tags-numeric .numeric" )[ OT_UI.Interval["increase"]["number_tag_numeric"] ];
+          value = $( value ).attr( "value" );
+          number = ( parseInt( value.substr( 0,value.length-1 ) ) + 1);
+
+          if( OT_UI.Interval["increase"]["max"] >= number ) {
+
+            /* Actualizar valor de la etiqueta numerica */
+            value = number.toString() + "%";
+            tag_numeric = $( document ).find( ".option-tree-group-tags-numeric .numeric" )[ OT_UI.Interval["increase"]["number_tag_numeric"] ];
+            $( tag_numeric ).attr( "value", value );
+
+            OT_UI.Interval["increase"]["repeat"] = OT_UI.Interval["increase"]["repeat"] + 1;
+          
+            if( OT_UI.Interval["increase"]["repeat"] == 5 ){
+
+              clearInterval( OT_UI.Interval["increase"]["interval"] );
+              OT_UI.Interval["increase"] = { interval: setInterval( increase, 100 ), repeat: 5, max: OT_UI.Interval["increase"]["max"], number_tag_numeric: OT_UI.Interval["increase"]["number_tag_numeric"] };
+            }
+          }
+        }
+
+        group_tags = $( document ).find( ".option-tree-group-tags-numeric .format-setting-inner" );
+        tag_numeric = this.parentNode
+
+        for (var number_tag = group_tags.length - 1; number_tag >= 0; number_tag--) {
+
+          if ( group_tags[ number_tag ] == tag_numeric ) {
+            
+            break;
+          }
+        }
+        
+        max = $( document ).find( ".option-tree-group-tags-numeric .numeric" ).attr( "max" );
+        OT_UI.Interval["increase"] = { interval: setInterval( increase, 270 ), repeat: 0, max: max, number_tag_numeric: number_tag };
+      });
+      $( document ).on( 'mousedown', '.option-tree-group-tags-numeric .decrement', function( event ) {
+        event.preventDefault();
+
+        function decrement(){
+    
+          value = $( document ).find( ".option-tree-group-tags-numeric .numeric" )[ OT_UI.Interval["decrement"]["number_tag_numeric"] ];
+          value = $( value ).attr( "value" );
+          number = ( parseInt( value.substr( 0,value.length-1 ) ) - 1);
+
+          if( OT_UI.Interval["decrement"]["min"] <= number ) {
+
+            value = number.toString() + "%";
+            tag_numeric = $( document ).find( ".option-tree-group-tags-numeric .numeric" )[ OT_UI.Interval["decrement"]["number_tag_numeric"] ];
+            $( tag_numeric ).attr( "value", value );
+
+            OT_UI.Interval["decrement"]["repeat"] = OT_UI.Interval["decrement"]["repeat"] + 1;
+          
+            if( OT_UI.Interval["decrement"]["repeat"] == 5 ){
+
+              clearInterval( OT_UI.Interval["decrement"]["interval"] );
+              OT_UI.Interval["decrement"] = { interval: setInterval( decrement, 100 ), repeat: 5, min: OT_UI.Interval["decrement"]["min"], number_tag_numeric: OT_UI.Interval["decrement"]["number_tag_numeric"] };
+            }
+          }
+        }
+        
+        group_tags = $( document ).find( ".option-tree-group-tags-numeric .format-setting-inner" );
+        tag_numeric = this.parentNode
+
+        for (var number_tag = group_tags.length - 1; number_tag >= 0; number_tag--) {
+
+          if ( group_tags[ number_tag ] == tag_numeric ) {
+            
+            break;
+          }
+        }
+
+        min = $( document ).find( ".option-tree-group-tags-numeric .numeric" ).attr( "min" );
+        OT_UI.Interval["decrement"] = { interval: setInterval( decrement, 270 ), repeat: 0, min: min, number_tag_numeric: number_tag };
+      });
+      $( document ).on( 'mouseup', '.option-tree-group-tags-numeric .increase', function( event ) {
+        event.preventDefault();
+        
+        clearInterval( OT_UI.Interval["increase"]["interval"] );
+      });
+      $( document ).on( 'mouseup', '.option-tree-group-tags-numeric .decrement', function( event ) {
+        event.preventDefault();
+        
+        clearInterval( OT_UI.Interval["decrement"]["interval"] );
+      });
+    } 
   };
   $(document).ready( function() {
     OT_UI.init();

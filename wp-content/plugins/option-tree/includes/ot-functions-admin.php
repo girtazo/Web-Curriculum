@@ -2470,6 +2470,7 @@ if ( ! function_exists( 'ot_option_types_array' ) ) {
       'taxonomy-checkbox'         => __('Taxonomy Checkbox', 'option-tree'),
       'taxonomy-select'           => __('Taxonomy Select', 'option-tree'),
       'group-tags'                => __('Group Tags', 'option-tree'),
+      'group-tags-numeric'        => __('Group Tags Numeric', 'option-tree'),
       'text'                      => __('Text', 'option-tree'),
       'textarea'                  => __('Textarea', 'option-tree'),
       'textarea-simple'           => __('Textarea Simple', 'option-tree'),
