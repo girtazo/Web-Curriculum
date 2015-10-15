@@ -1022,7 +1022,7 @@
         event.preventDefault();
         
         /* Etiqueta actual */
-        tag_numeric = $( this ).prev();
+        tag_numeric = $( this ).next();
 
         /* Obtener el numero del valor */
         value = $( tag_numeric ).attr( "value" );
