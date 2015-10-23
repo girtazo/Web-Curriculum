@@ -3232,15 +3232,23 @@ if ( ! function_exists( 'ot_type_upload' ) ) {
 }
 
 /*Opciones mias personalizadas*/
+
+/**
+ * group tags type.
+ *
+ * See @ot_display_by_type to see the full list of available arguments.
+ *
+ * @param     array     An array of arguments.
+ * @return    array     An array of values
+ *
+ * @access    public
+ * @since     2.0
+ */
+
 if ( ! function_exists( 'ot_type_group_tags' ) ) {
   
   function ot_type_group_tags( $args = array() ) {
     
-    $settings = get_option( 'option_tree_settings' )["settings"];
-    debug_to_console( "-------------settings-------------" );
-    debug_to_console( $settings );
-    debug_to_console( "-------------args-------------" );
-    debug_to_console( $args );
     /* turns arguments array into variables */
     extract( $args );
     
@@ -3318,15 +3326,24 @@ if ( ! function_exists( 'ot_type_group_tags' ) ) {
   
 }
 
-if ( ! function_exists( 'ot_type_group_tags_numeric' ) ) {
+/**
+ * group tags type.
+ *
+ * See @ot_display_by_type to see the full list of available arguments.
+ *
+ * @param     array     An array of arguments.
+ * @return    array     An array of values and options
+ *
+ * @access    public
+ * @since     2.0
+ */
+
+if ( ! function_exists( 'ot_type_knob_jquery' ) ) {
   
-  function ot_type_group_tags_numeric( $args = array() ) {
+  function ot_type_knob_jquery( $args = array() ) {
     
     $settings = get_option( 'option_tree_settings' )["settings"];
-    debug_to_console( "-------------settings-------------" );
-    debug_to_console( $settings );
-    debug_to_console( "-------------args-------------" );
-    debug_to_console( $args );
+
     /* turns arguments array into variables */
     extract( $args );
     
@@ -3334,27 +3351,27 @@ if ( ! function_exists( 'ot_type_group_tags_numeric' ) ) {
     $has_desc = $field_desc ? true : false;
     
     /* format setting outer wrapper */
-    echo '<div class="format-setting type-text option-tree-group-tags-numeric ' . ( $has_desc ? 'has-desc' : 'no-desc' ) . '">';
+    echo '<div class="format-setting type-text option-tree-knob-jquery ' . ( $has_desc ? 'has-desc' : 'no-desc' ) . '">';
       
       /* description */
       echo $has_desc ? '<div class="description">' . htmlspecialchars_decode( $field_desc ) . '</div>' : '';
       
-      echo '<input type="hidden" name="' . esc_attr( $field_name ) . '" id="' . esc_attr( $field_id ) . '" class="data-setting-group-tags-numeric" />';
+      echo '<input type="hidden" name="' . esc_attr( $field_name ) . '" id="' . esc_attr( $field_id ) . '" class="data-setting-knob-jquery" />';
       
-      $num_text_tags = count( $field_value );
+      $num_knobs = count( $field_value );
       
-      if ( $num_text_tags > 1 ) {
+      if ( $num_knobs > 1 ) {
 
-        foreach ( $field_value as $num_text_tag => $text_tag ) {
+        foreach ( $field_value as $num_knob => $knob ) {
 
-          switch ( $num_text_tag +1 ) {
+          switch ( $num_knob +1 ) {
 
             case 1:
-              $class = "first-tag";
+              $class = "first-knob";
               break;
 
-            case $num_text_tags:
-              $class = "last-tag";
+            case $num_knobs:
+              $class = "last-knob";
               break;
 
             default:
@@ -3366,18 +3383,47 @@ if ( ! function_exists( 'ot_type_group_tags_numeric' ) ) {
           
           echo '<div class="format-setting-inner '.$class.'">';
             
-            /* build text input */
-            echo '<input type="text" class="option-tree-ui-input' . esc_attr( $field_class ) . '" id="' . esc_attr( $field_id ) . '_'.$num_text_tag.'_skill" name="' . esc_attr( $field_name ) . '['.$num_text_tag.'][skill]" placeholder="Habilidad" value="' . esc_attr( $text_tag["skill"] ) . '" />';
-            echo '<img class="decrement" alt="minus" src="'.OT_URL.'/assets/images/icon-minus.png"/>';
-            echo '<input type="text" class="numeric option-tree-ui-input' . esc_attr( $field_class ) . '" id="' . esc_attr( $field_id ) . '_'.$num_text_tag.'_numeric" name="' . esc_attr( $field_name ) . '['.$num_text_tag.'][numeric]" placeholder="Porcentaje" readonly maxlength=4 min=0 max=100 value="' . esc_attr( $text_tag["numeric"] ) . '" />';
-            echo '<img class="increase" alt="plus" src="'.OT_URL.'/assets/images/icon-plus.png"/>';
+            /* colorpicker JS */
+            echo '<script>';
+
+              echo 'jQuery(document).ready(function($) {  OT_UI.bind_colorpicker("' . esc_attr( $field_id ) . '_' . $num_knob . '_options_data_bgcolor"); });';
+              echo 'jQuery(document).ready(function($) {  OT_UI.bind_colorpicker("' . esc_attr( $field_id ) . '_' . $num_knob . '_options_data_fgcolor"); });';
             
-            /* remove button tag */
-            echo '<button class="option-tree-ui-button button-remove button button-primary icon ot-icon-minus-circle">'.$field_title.'</button>';
+            echo '</script>';
+
+            echo '<div class="row">';
             
-            /* add button tag */
-            echo '<button class="option-tree-ui-button button-add button button-primary icon ot-icon-plus-circle">'.$field_title.'</button>';
+              echo '<input type="text" class="skill option-tree-ui-input' . esc_attr( $field_class ) . '" id="' . esc_attr( $field_id ) . '_' . $num_knob . '_skill" name="' . esc_attr( $field_name ) . '['.$num_knob.'][skill]" placeholder="Habilidad" value="' . esc_attr( $knob["skill"] ) . '" />';
+              echo '<img class="decrement" alt="minus" src="'.OT_URL.'/assets/images/icon-minus.png"/>';
+              echo '<input type="text" class="value option-tree-ui-input' . esc_attr( $field_class ) . '" id="' . esc_attr( $field_id ) . '_' . $num_knob . '_options_value" name="' . esc_attr( $field_name ) . '['.$num_knob.'][options][value]" placeholder="Porcentaje" readonly maxlength=4 min=0 max=100 value="' . esc_attr( $knob["options"]["value"] ) . '" />';
+              echo '<img class="increase" alt="plus" src="'.OT_URL.'/assets/images/icon-plus.png"/>';
+              
+              /* Remove button knob */
+              echo '<button class="option-tree-ui-button button-remove button button-primary icon ot-icon-minus-circle">'.$field_title.'</button>';
             
+              /* Add button knob */
+              echo '<button class="option-tree-ui-button button-add button button-primary icon ot-icon-plus-circle">'.$field_title.'</button>';
+
+            echo '</div>';
+
+            echo '<div class="row">';
+            
+              echo '<input type="text" class="data-width option-tree-ui-input' . esc_attr( $field_class ) . '" id="' . esc_attr( $field_id ) . '_' . $num_knob . '_options_data_width" name="' . esc_attr( $field_name ) . '['.$num_knob.'][options][data-width]" placeholder="Tamaño" value="' . esc_attr( $knob["options"]["data-width"] ) . '" />';
+              echo '<select class="option-tree-ui-select data-linecap" name="' . esc_attr( $field_name ) . '['.$num_knob.'][options][data-linecap]">';
+                
+                echo '<option value="" ';
+                if( $knob["options"]["data-linecap"] == "" ) { echo 'selected'; }
+                echo '></option>';
+                echo '<option value="round" ';
+                if( $knob["options"]["data-linecap"] == "round" ) { echo 'selected'; }
+                echo '>Round</option>';
+              
+              echo '</select>';
+              echo '<input type="text" class="data-bgcolor hide-color-picker ' . esc_attr( $field_class ) . '" id="' . esc_attr( $field_id ) . '_' . $num_knob . '_options_data_bgcolor" name="' . esc_attr( $field_name ) . '[' . $num_knob . '][options][data-bgcolor]" value="' . esc_attr( $knob["options"]["data-bgcolor"] ) . '" />';
+              echo '<input type="text" class="data-fgcolor hide-color-picker ' . esc_attr( $field_class ) . '" id="' . esc_attr( $field_id ) . '_' . $num_knob . '_options_data_fgcolor" name="' . esc_attr( $field_name ) . '[' . $num_knob . '][options][data-fgcolor]" value="' . esc_attr( $knob["options"]["data-fgcolor"] ) . '" />';
+            
+            echo '</div>';
+
           echo '</div>';
       
         }
@@ -3390,23 +3436,54 @@ if ( ! function_exists( 'ot_type_group_tags_numeric' ) ) {
           $field_value = $field_value[0];
         } else {
 
-          $field_value            = [];
-          $field_value["numeric"] = 0;
-          $field_value["numeric"] = $field_value["numeric"]."%";
+          $field_value                        = [];
+          $field_value["options"]["data-bgcolor"]  = "#ffffff";
+          $field_value["options"]["data-fgcolor"]  = "#000000";
+          $field_value["options"]["value"]         = 0;
+          $field_value["options"]["value"]         = $field_value["options"]["value"]."%";
         }
 
         /* format setting inner wrapper */
-        echo '<div class="format-setting-inner first-tag last-tag">';
+        echo '<div class="format-setting-inner first-knob last-knob">';
           
-          /* build tag */
-          echo '<input type="text" class="option-tree-ui-input' . esc_attr( $field_class ) . '" id="' . esc_attr( $field_id ) . '_0_skill" name="' . esc_attr( $field_name ) . '[0][skill]" placeholder="Habilidad" value="' . esc_attr( $field_value["skill"] ) . '" />';
-          echo '<img class="decrement" alt="minus" src="'.OT_URL.'/assets/images/icon-minus.png"/>';
-          echo '<input type="text" class="numeric option-tree-ui-input' . esc_attr( $field_class ) . '" id="' . esc_attr( $field_id ) . '_0_numeric" name="' . esc_attr( $field_name ) . '[0][numeric]" placeholder="Porcentaje" readonly maxlength=4 min=0 max=100 value="' . esc_attr( $field_value["numeric"] ) . '" />';
-          echo '<img class="increase" alt="plus" src="'.OT_URL.'/assets/images/icon-plus.png"/>';
+          /* colorpicker JS */
+          echo '<script>';
 
-          /* add button tag */
-          echo '<button class="option-tree-ui-button button-add button button-primary icon ot-icon-plus-circle">'.$field_title.'</button>';
-      
+            echo 'jQuery(document).ready(function($) {  OT_UI.bind_colorpicker("' . esc_attr( $field_id ) . '_0_options_data_bgcolor"); });';
+            echo 'jQuery(document).ready(function($) {  OT_UI.bind_colorpicker("' . esc_attr( $field_id ) . '_0_options_data_fgcolor"); });';
+          
+          echo '</script>';
+
+          echo '<div class="row">';
+
+            echo '<input type="text" class="skill option-tree-ui-input' . esc_attr( $field_class ) . '" id="' . esc_attr( $field_id ) . '_0_skill" name="' . esc_attr( $field_name ) . '[0][skill]" placeholder="Habilidad" value="' . esc_attr( $field_value["skill"] ) . '" />';
+            echo '<img class="decrement" alt="minus" src="'.OT_URL.'/assets/images/icon-minus.png"/>';
+            echo '<input type="text" class="value option-tree-ui-input' . esc_attr( $field_class ) . '" id="' . esc_attr( $field_id ) . '_0_options_value" name="' . esc_attr( $field_name ) . '[0][options][value]" placeholder="Porcentaje" readonly maxlength=4 min=0 max=100 value="' . esc_attr( $field_value["options"]["value"] ) . '" />';
+            echo '<img class="increase" alt="plus" src="'.OT_URL.'/assets/images/icon-plus.png"/>';
+            
+            /* add button knob */
+            echo '<button class="option-tree-ui-button button-add button button-primary icon ot-icon-plus-circle">'.$field_title.'</button>';
+
+          echo '</div>';
+          
+          echo '<div class="row">';          
+            
+            echo '<input type="text" class="data-width option-tree-ui-input' . esc_attr( $field_class ) . '" id="' . esc_attr( $field_id ) . '_0_options_data_width" name="' . esc_attr( $field_name ) . '[0][options][data-width]" placeholder="Tamaño" value="' . esc_attr( $field_value["options"]["data-width"] ) . '" />';
+            echo '<select class="option-tree-ui-select data-linecap ' . esc_attr( $field_class ) . '" id="' . esc_attr( $field_id ) . '_0_options_data_linecap" name="' . esc_attr( $field_name ) . '[0][options][data-linecap]">';
+              
+              echo '<option value="" ';
+              if( $field_value["options"]["data-linecap"] == "" ) { echo 'selected'; }
+              echo '</option>';
+              echo '<option value="round" ';
+              if( $field_value["options"]["data-linecap"] == "round" ) { echo 'selected'; }
+              echo '>Round</option>';
+            
+            echo '</select>';
+            echo '<input type="text" class="data-bgcolor hide-color-picker ' . esc_attr( $field_class ) . '" id="' . esc_attr( $field_id ) . '_0_options_data_bgcolor" name="' . esc_attr( $field_name ) . '[0][options][data-bgcolor]" value="' . esc_attr( $field_value["options"]["data-bgcolor"] ) . '" />';
+            echo '<input type="text" class="data-fgcolor hide-color-picker ' . esc_attr( $field_class ) . '" id="' . esc_attr( $field_id ) . '_0_options_data_fgcolor" name="' . esc_attr( $field_name ) . '[0][options][data-fgcolor]" value="' . esc_attr( $field_value["options"]["data-fgcolor"] ) . '" />';
+          
+          echo '</div>';
+
         echo '</div>';
       }
       
