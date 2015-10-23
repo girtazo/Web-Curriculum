@@ -7,24 +7,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <?php if (is_search()) { ?> <meta name="robots" content="noindex, nofollow" /><?php } ?>
 
-    <link rel="stylesheet" type="text/css" href="<?php echo get_stylesheet_directory_uri(); ?>/styles/media-queries.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo get_stylesheet_directory_uri(); ?>/styles/style.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo get_stylesheet_directory_uri(); ?>/flex-slider/flexslider.css"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo get_stylesheet_directory_uri(); ?>/styles/prettyPhoto.css"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo get_stylesheet_directory_uri(); ?>/styles/tipsy.css"/>
-    
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
-
-    <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/scripts/jquery-1.7.1.min.js"></script>
-    <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/flex-slider/jquery.flexslider-min.js"></script>
-    <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/scripts/jquery.prettyPhoto.js"></script>
-    <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/scripts/jquery.tipsy.js"></script>
-    <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/scripts/jquery.knob.js"></script>
-    <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/scripts/jquery.isotope.min.js"></script>
-    <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/scripts/jquery.smooth-scroll.min.js"></script>
-    <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/scripts/waypoints.min.js"></script>
-    <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/scripts/setup.js"></script>
 
 	<title>
 	   <?php
@@ -58,6 +42,11 @@
 	<?php if ( is_singular() ) wp_enqueue_script('comment-reply'); ?>
 
 	<?php wp_head(); ?>
+    <style type="text/css" media="screen">
+    html {
+        margin-top: 0px !important;
+    }
+    </style>
 </head>
 
 <body <?php body_class(); ?>>

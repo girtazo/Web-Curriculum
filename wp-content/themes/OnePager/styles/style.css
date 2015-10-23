@@ -75,12 +75,10 @@ div#wrap {
 	margin:0 auto!important
 }
 div#sidebar {
-	width:220px;
+	position: fixed;
 	height:100%;
-	float:left;
 	background:#2c2c2c;
 	border-right:1px solid #2e2f2f;
-	position:fixed
 }
 a#logo {
 	text-align:center;
@@ -129,12 +127,8 @@ ul#navigation li a:hover, ul#navigation li a.active {
 	color:#FFF;
 }
 div#container {
-	width:730px;
-	float:right;
+	padding-top: 32px;
 	padding-right:25px;
-	left:-5px;
-	position:relative;
-	padding-top:0;
 	background:#619ec2;
 }
 div.page {
@@ -143,7 +137,8 @@ div.page {
 	padding-top:20px
 }
 div.page_content {
-	padding:25px 0 40px 25px
+	padding:25px 0 40px 25px;
+	display: inline-block;
 }
 div#container h3.page_title {
 	font-family: 'OstrichSansBlack';
@@ -628,4 +623,28 @@ ul.sublist li a:hover {
 }
 .flex-control-nav {
 	display:none;
+}
+
+/* CSS Custom mio */
+
+.group-tags .tag {
+	float: left;
+	margin:5px;
+	padding: 3px;
+	border: 1px solid;
+	border-radius: 5px 5px 5px 5px;
+	background-color: #ffffff;
+	color: #000000;
+}
+
+#frame-top {
+	position: fixed;
+	height: 32px;
+	width: 100%;
+	background-color: #195f88;
+	z-index: 1;
+}
+
+.knob-basic {
+	
 }

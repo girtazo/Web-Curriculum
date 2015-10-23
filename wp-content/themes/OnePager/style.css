@@ -1007,6 +1007,8 @@ blockquote a:hover{text-decoration:underline!important;}
 
 .navigation .wp-pagenavi a.page,
 
+.navigation .wp-pagenavi section a,
+
 .navigation .wp-pagenavi a.nextpostslink,
 
 .navigation .wp-pagenavi a.previouspostslink,
@@ -1042,6 +1044,8 @@ blockquote a:hover{text-decoration:underline!important;}
 }
 
 .navigation .wp-pagenavi a.page:hover,
+
+.navigation .wp-pagenavi section a:hover,
 
 .navigation .wp-pagenavi a.nextpostslink:hover,
 
@@ -1215,7 +1219,7 @@ width:510px !important;
 	cursor:pointer;
 
 	background-color: #34787C;
-border-bottom: solid 2px #0E3A3C;
+	border-bottom: solid 2px #0E3A3C;
 
 	color:#fff;
 
