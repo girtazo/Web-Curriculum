@@ -33,7 +33,7 @@
       this.css_editor_mode();
       this.javascript_editor_mode();
       this.group_tags();
-      this.group_tags_numeric();
+      this.knob_jquery();
     },
     init_hide_body: function(elm,type) {
       var css = '.option-tree-setting-body';
@@ -881,47 +881,70 @@
         $( tag_last ).addClass("last-tag");
       });
     },
-    group_tags_numeric: function() {
+    knob_jquery: function() {
       this.Interval = {};
-      $( document ).on( 'click', '.option-tree-group-tags-numeric .button-add', function( event ) {
+      $( document ).on( 'click', '.option-tree-knob-jquery .button-add', function( event ) {
         event.preventDefault();
         
         /* Recoger configuracion del plugin */
-        data_setting    = $( document ).find( ".data-setting-group-tags-numeric" );
-        name_setting    = $( data_setting ).attr("name");
-        id_setting      = $( data_setting ).attr("id");
+        data_setting    = $( document ).find( ".data-setting-knob-jquery" );
+        name_setting    = $( data_setting ).attr( "name" );
+        id_setting      = $( data_setting ).attr( "id" );
 
-        new_tag    = $(this.parentNode).clone();
+        new_knob    = $( this.parentNode.parentNode ).clone();
 
         /* Array de etiquetas */
-        group_tags = $( document ).find( ".option-tree-group-tags-numeric .format-setting-inner" );
+        knobs = $( document ).find( ".option-tree-knob-jquery .format-setting-inner" );
 
         /* Etiqueta actual */
-        tag        = this.parentNode;
+        knob        = this.parentNode.parentNode;
 
         /* Añadiendo boton de eliminacion cuando hay mas de una etiqueta */
-        if( group_tags.length == 1 ){
+        if( knobs.length == 1 ){
 
-          icon = $( tag ).find( "img.increase" );
-          $( icon ).after('<button class="option-tree-ui-button button-remove button button-primary icon ot-icon-minus-circle"></button>');
+          icon = $( knob ).find( "img.increase" );
+          $( icon ).after( '<button class="option-tree-ui-button button-remove button button-primary icon ot-icon-minus-circle"></button>' );
         }
 
         /* Clonando etiqueta actual */
-        new_tag    = $(this.parentNode).clone();
+        new_knob    = $( this.parentNode.parentNode ).clone();
         
         /* Obtenemos el numero etiqueta actual */
-        for (var number_tag = group_tags.length - 1; number_tag >= 0; number_tag--) {
+        for ( var number_knob = knobs.length - 1; number_knob >= 0; number_knob-- ) {
 
-          if ( group_tags[ number_tag ] != tag ) {
+          if ( knobs[ number_knob ] != knob ) {
 
             /* Actualizar informacion por encima de la etiqueta actual */
-            input = $( document ).find( ".option-tree-group-tags-numeric .format-setting-inner input:not(.numeric)" )[ number_tag ];
-            $( input ).attr( "name", name_setting + "[" + ( number_tag +1) + "][skill]" );
-            $( input ).attr( "id", id_setting + "_" + ( number_tag +1) + "_skill" );
-            input = $( document ).find( ".option-tree-group-tags-numeric .format-setting-inner input.numeric" )[ number_tag ];
-            $( input ).attr( "name", name_setting + "[" + ( number_tag +1) + "][numeric]" );
-            $( input ).attr( "id", id_setting + "_" + ( number_tag +1) + "numeric" );
+            
+            // Skill
+            input = $( document ).find( ".option-tree-knob-jquery .format-setting-inner input.skill" )[ number_knob ];
+            $( input ).attr( "name", name_setting + "[" + ( number_knob +1 ) + "][skill]" );
+            $( input ).attr( "id", id_setting + "_" + ( number_knob +1 ) + "_skill" );
+            
+            // Value
+            input = $( document ).find( ".option-tree-knob-jquery .format-setting-inner input.value" )[ number_knob ];
+            $( input ).attr( "name", name_setting + "[" + ( number_knob +1 ) + "][options][value]" );
+            $( input ).attr( "id", id_setting + "_" + ( number_knob +1 ) + "_options_value" );
+            
+            // Data width
+            input = $( document ).find( ".option-tree-knob-jquery .format-setting-inner input.data-width" )[ number_knob ];
+            $( input ).attr( "name", name_setting + "[" + ( number_knob +1 ) + "][options][data-width]" );
+            $( input ).attr( "id", id_setting + "_" + ( number_knob +1 ) + "_options_data_width" );
 
+            // Linecap
+            input = $( document ).find( ".option-tree-knob-jquery .format-setting-inner select.data-linecap" )[ number_knob ];
+            $( input ).attr( "name", name_setting + "[" + ( number_knob +1 ) + "][options][data-linecap]" );
+            $( input ).attr( "id", id_setting + "_" + ( number_knob +1 ) + "_options_data_linecap" );
+
+            // Bg Color
+            input = $( document ).find( ".option-tree-knob-jquery .format-setting-inner input.data-bgcolor" )[ number_knob ];
+            $( input ).attr( "name", name_setting + "[" + ( number_knob +1 ) + "][options][data-bgcolor]" );
+            $( input ).attr( "id", id_setting + "_" + ( number_knob +1 ) + "_options_data_bgcolor" );
+          
+            // Fg Color
+            input = $( document ).find( ".option-tree-knob-jquery .format-setting-inner input.data-fgcolor" )[ number_knob ];
+            $( input ).attr( "name", name_setting + "[" + ( number_knob +1 ) + "][options][data-fgcolor]" );
+            $( input ).attr( "id", id_setting + "_" + ( number_knob +1 ) + "_options_data_fgcolor" );
           } else {
 
             break;
@@ -929,55 +952,109 @@
         }
 
         /* Preparar informacion para nueva etiqueta */
-        input = $( new_tag ).find( "input:not(.numeric)" );
-        $( input ).attr( "name", name_setting + "[" + ( number_tag +1) + "][skill]" );
-        $( input ).attr( "id", id_setting + "_" + ( number_tag +1) + "_skill" );
+        
+        // Skill
+        input = $( new_knob ).find( "input.skill" );
+        $( input ).attr( "name", name_setting + "[" + ( number_knob +1 ) + "][skill]" );
+        $( input ).attr( "id", id_setting + "_" + ( number_knob +1 ) + "_skill" );
         $( input ).attr( "value", "" );
-        input = $( new_tag ).find( "input.numeric" );
-        $( input ).attr( "name", name_setting + "[" + ( number_tag +1) + "][numeric]" );
-        $( input ).attr( "id", id_setting + "_" + ( number_tag +1) + "_numeric" );
+        
+        // Value
+        input = $( new_knob ).find( "input.value" );
+        $( input ).attr( "name", name_setting + "[" + ( number_knob +1 ) + "][options][value]" );
+        $( input ).attr( "id", id_setting + "_" + ( number_knob +1 ) + "_options_value" );
         $( input ).attr( "value", "0%" );
 
-        if ( $( new_tag ).hasClass("first-tag") ) {
+        // Data width
+        input = $( new_knob ).find( "input.data-width" );
+        $( input ).attr( "name", name_setting + "[" + ( number_knob +1 ) + "][options][data-width]" );
+        $( input ).attr( "id", id_setting + "_" + ( number_knob +1 ) + "_options_data_width" );
+        $( input ).attr( "value", 100 );
 
-          $( new_tag ).removeClass("first-tag");
+        // Linecap
+        input = $( new_knob ).find( "select.data-linecap" );
+        $( input ).attr( "name", name_setting + "[" + ( number_knob +1 ) + "][options][data-linecap]" );
+        $( input ).attr( "id", id_setting + "_" + ( number_knob +1 ) + "_options_data_linecap" );
+        $( input ).attr( "value", "" );
+        $( input ).parent().find( "span" ).html("");
+        
+        // Bg Color
+        colorpicker = $( new_knob ).find( ".wp-picker-container .data-bgcolor" ).parent().parent();
+        $( colorpicker ).after( '<input type="text" class="data-bgcolor hide-color-picker" id="' + id_setting + '_' + ( number_knob +1 ) + '_options_data_bgcolor" name="' + name_setting + '[' + ( number_knob +1 ) + '][options][data-bgcolor]" value="#ffffff" />' );
+        $( colorpicker ).detach();
+
+        // Fg Color
+        colorpicker = $( new_knob ).find( ".wp-picker-container .data-fgcolor" ).parent().parent();
+        $( colorpicker ).after( '<input type="text" class="data-fgcolor hide-color-picker" id="' + id_setting + '_' + ( number_knob +1 ) + '_options_data_fgcolor" name="' + name_setting + '[' + ( number_knob +1 ) + '][options][data-fgcolor]" value="#000000"/>' );
+        $( colorpicker ).detach();
+
+        if ( $( new_knob ).hasClass( "first-knob" ) ) {
+
+          $( new_knob ).removeClass( "first-knob" );
         }
 
-        if ( $( new_tag ).hasClass("last-tag") ) {
+        if ( $( new_knob ).hasClass( "last-knob" ) ) {
 
-          $( tag ).removeClass("last-tag");
+          $( knob ).removeClass( "last-knob" );
         }
 
         /* Añadiendo nueva etiqueta */
-        $( tag ).after(new_tag);
+        $( knob ).after( new_knob );
+
+        /* Ejecutar JQuery color picker */
+        OT_UI.bind_colorpicker( "habilidades_con_dominio_de_porcentaje_" + ( number_knob +1 ) + "_options_data_bgcolor" );
+        OT_UI.bind_colorpicker( "habilidades_con_dominio_de_porcentaje_" + ( number_knob +1 ) + "_options_data_fgcolor" );
       });
-      $( document ).on( 'click', '.option-tree-group-tags-numeric .button-remove', function( event ) {
+      $( document ).on( 'click', '.option-tree-knob-jquery .button-remove', function( event ) {
         event.preventDefault();
         
         /* Recoger configuracion del plugin */
-        data_setting    = $( document ).find( ".data-setting-group-tags-numeric" );
+        data_setting    = $( document ).find( ".data-setting-knob-jquery" );
         name_setting    = $( data_setting ).attr("name");
         id_setting      = $( data_setting ).attr("id");
         
         /* Array de etiquetas */
-        group_tags = $( document ).find( ".option-tree-group-tags-numeric .format-setting-inner" );
+        knobs = $( document ).find( ".option-tree-knob-jquery .format-setting-inner" );
         
         /* Etiqueta actual */
-        tag = this.parentNode;
+        knob = this.parentNode.parentNode;
         
         /* Obtenemos el numero etiqueta actual */
-        for (var number_tag = group_tags.length - 1; number_tag >= 0; number_tag--) {
+        for (var number_knob = knobs.length - 1; number_knob >= 0; number_knob--) {
 
-          if ( group_tags[ number_tag ] != tag ) {
+          if ( knobs[ number_knob ] != knob ) {
             
             /* Actualizar informacion por encima de la etiqueta actual */
-            input = $( document ).find( ".option-tree-group-tags-numeric .format-setting-inner input:not(.numeric)" )[ number_tag ];
-            $( input ).attr( "name", name_setting + "[" + ( number_tag -1) + "][skill]" );
-            $( input ).attr( "id", id_setting + "_" + ( number_tag -1) + "_skill" );
-            input = $( document ).find( ".option-tree-group-tags-numeric .format-setting-inner input.numeric" )[ number_tag ];
-            $( input ).attr( "name", name_setting + "[" + ( number_tag -1) + "][numeric]" );
-            $( input ).attr( "id", id_setting + "_" + ( number_tag -1) + "_numeric" );
             
+            // Skill
+            input = $( document ).find( ".option-tree-knob-jquery .format-setting-inner input.skill" )[ number_knob ];
+            $( input ).attr( "name", name_setting + "[" + ( number_knob -1) + "][skill]" );
+            $( input ).attr( "id", id_setting + "_" + ( number_knob -1) + "_skill" );
+            
+            // Value
+            input = $( document ).find( ".option-tree-knob-jquery .format-setting-inner input.value" )[ number_knob ];
+            $( input ).attr( "name", name_setting + "[" + ( number_knob -1) + "][options][value]" );
+            $( input ).attr( "id", id_setting + "_" + ( number_knob -1) + "_options_value" );
+            
+            // Data width
+            input = $( document ).find( ".option-tree-knob-jquery .format-setting-inner input.data-width" )[ number_knob ];
+            $( input ).attr( "name", name_setting + "[" + ( number_knob -1 ) + "][options][data-width]" );
+            $( input ).attr( "id", id_setting + "_" + ( number_knob -1 ) + "_options_data_width" );
+
+            // Bg Color
+            input = $( document ).find( ".option-tree-knob-jquery .format-setting-inner input.data-bgcolor" )[ number_knob ];
+            $( input ).attr( "name", name_setting + "[" + ( number_knob -1) + "][options][data-bgcolor]" );
+            $( input ).attr( "id", id_setting + "_" + ( number_knob -1) + "_options_data_bgcolor" );
+
+            // Fg Color
+            input = $( document ).find( ".option-tree-knob-jquery .format-setting-inner input.data-fgcolor" )[ number_knob ];
+            $( input ).attr( "name", name_setting + "[" + ( number_knob -1 ) + "][options][data-fgcolor]" );
+            $( input ).attr( "id", id_setting + "_" + ( number_knob -1 ) + "_options_data_fgcolor" );
+
+            // Linecap
+            input = $( document ).find( ".option-tree-knob-jquery .format-setting-inner select.data-linecap" )[ number_knob ];
+            $( input ).attr( "name", name_setting + "[" + ( number_knob -1 ) + "][options][data-linecap]" );
+            $( input ).attr( "id", id_setting + "_" + ( number_knob -1 ) + "_options_data_linecap" );
           } else {
             
             break;
@@ -985,144 +1062,144 @@
         };
         
         /* Eliminando etiqueta */
-        $( tag ).detach();
+        $( knob ).detach();
 
         /* Ultima etiqueta del grupo */
-        tag_last = $( document ).find( ".option-tree-group-tags-numeric .format-setting-inner" )[group_tags.length-2];
+        knob_last = $( document ).find( ".option-tree-knob-jquery .format-setting-inner" )[knobs.length-2];
 
         /* Comprobando si la ultima etiqueta es la unica etiqueta */
-        if( group_tags.length-1 == 1 ) {
+        if( knobs.length-1 == 1 ) {
 
-          $( tag_last ).addClass("first-tag");
-          $( tag_last ).find( ".button-remove" ).detach();
+          $( knob_last ).addClass("first-knob");
+          $( knob_last ).find( ".button-remove" ).detach();
         }
         
-        $( tag_last ).addClass("last-tag");
+        $( knob_last ).addClass("last-knob");
       });
-      $( document ).on( 'click', '.option-tree-group-tags-numeric .increase', function( event ) {
+      $( document ).on( 'click', '.option-tree-knob-jquery .increase', function( event ) {
         event.preventDefault();
         
         /* Etiqueta actual */
-        tag_numeric = $( this ).prev();  
+        knob_value = $( this ).prev();  
         
         /* Obtener el numero del valor */
-        value = $( tag_numeric ).attr( "value" );
+        value = $( knob_value ).attr( "value" );
         number =  parseInt( value.substr( 0, value.length - 1 ) ) + 1;
 
-        max = parseInt( $( tag_numeric ).attr( "max" ) );
+        max = parseInt( $( knob_value ).attr( "max" ) );
 
         if( max >= number ) {
 
-          /* Actualizar valor de la etiqueta numerica */
+          /* Actualizar valor de la etiqueta value */
           value = number.toString() + "%";
-          $( tag_numeric ).attr( "value", value );
+          $( knob_value ).attr( "value", value );
         }
       });
-      $( document ).on( 'click', '.option-tree-group-tags-numeric .decrement', function( event ) {
+      $( document ).on( 'click', '.option-tree-knob-jquery .decrement', function( event ) {
         event.preventDefault();
         
         /* Etiqueta actual */
-        tag_numeric = $( this ).next();
+        knob_value = $( this ).next();
 
         /* Obtener el numero del valor */
-        value = $( tag_numeric ).attr( "value" );
+        value = $( knob_value ).attr( "value" );
         number =  parseInt( value.substr( 0, value.length - 1 ) ) - 1;
 
-        min = parseInt( $( tag_numeric ).attr( "min" ) );
+        min = parseInt( $( knob_value ).attr( "min" ) );
 
         if( min <= number ) {
 
-          /* Actualizar valor de la etiqueta numerica */
+          /* Actualizar valor de la etiqueta value */
           value = number.toString() + "%";
-          $( tag_numeric ).attr( "value", value );
+          $( knob_value ).attr( "value", value );
         }
       });
-      $( document ).on( 'mousedown', '.option-tree-group-tags-numeric .increase', function( event ) {
+      $( document ).on( 'mousedown', '.option-tree-knob-jquery .increase', function( event ) {
         event.preventDefault();
 
         function increase(){
           
           /* Obtener el numero del valor */
-          value = $( document ).find( ".option-tree-group-tags-numeric .numeric" )[ OT_UI.Interval["increase"]["number_tag_numeric"] ];
+          value = $( document ).find( ".option-tree-knob-jquery .value" )[ OT_UI.Interval["increase"]["number_knob_value"] ];
           value = $( value ).attr( "value" );
-          number = ( parseInt( value.substr( 0,value.length-1 ) ) + 1);
+          number = ( parseInt( value.substr( 0, value.length-1 ) ) + 1);
 
           if( OT_UI.Interval["increase"]["max"] >= number ) {
 
-            /* Actualizar valor de la etiqueta numerica */
+            /* Actualizar valor de la etiqueta value */
             value = number.toString() + "%";
-            tag_numeric = $( document ).find( ".option-tree-group-tags-numeric .numeric" )[ OT_UI.Interval["increase"]["number_tag_numeric"] ];
-            $( tag_numeric ).attr( "value", value );
+            knob_value = $( document ).find( ".option-tree-knob-jquery .value" )[ OT_UI.Interval["increase"]["number_knob_value"] ];
+            $( knob_value ).attr( "value", value );
 
             OT_UI.Interval["increase"]["repeat"] = OT_UI.Interval["increase"]["repeat"] + 1;
           
             if( OT_UI.Interval["increase"]["repeat"] == 5 ){
 
               clearInterval( OT_UI.Interval["increase"]["interval"] );
-              OT_UI.Interval["increase"] = { interval: setInterval( increase, 100 ), repeat: 5, max: OT_UI.Interval["increase"]["max"], number_tag_numeric: OT_UI.Interval["increase"]["number_tag_numeric"] };
+              OT_UI.Interval["increase"] = { interval: setInterval( increase, 100 ), repeat: 5, max: OT_UI.Interval["increase"]["max"], number_knob_value: OT_UI.Interval["increase"]["number_knob_value"] };
             }
           }
         }
 
-        group_tags = $( document ).find( ".option-tree-group-tags-numeric .format-setting-inner" );
-        tag_numeric = this.parentNode
+        knobs = $( document ).find( ".option-tree-knob-jquery .format-setting-inner" );
+        knob_value = this.parentNode.parentNode;
 
-        for (var number_tag = group_tags.length - 1; number_tag >= 0; number_tag--) {
+        for (var number_knob = knobs.length - 1; number_knob >= 0; number_knob--) {
 
-          if ( group_tags[ number_tag ] == tag_numeric ) {
+          if ( knobs[ number_knob ] == knob_value ) {
             
             break;
           }
         }
         
-        max = $( document ).find( ".option-tree-group-tags-numeric .numeric" ).attr( "max" );
-        OT_UI.Interval["increase"] = { interval: setInterval( increase, 270 ), repeat: 0, max: max, number_tag_numeric: number_tag };
+        max = $( document ).find( ".option-tree-knob-jquery .value" ).attr( "max" );
+        OT_UI.Interval["increase"] = { interval: setInterval( increase, 270 ), repeat: 0, max: max, number_knob_value: number_knob };
       });
-      $( document ).on( 'mousedown', '.option-tree-group-tags-numeric .decrement', function( event ) {
+      $( document ).on( 'mousedown', '.option-tree-knob-jquery .decrement', function( event ) {
         event.preventDefault();
 
         function decrement(){
     
-          value = $( document ).find( ".option-tree-group-tags-numeric .numeric" )[ OT_UI.Interval["decrement"]["number_tag_numeric"] ];
+          value = $( document ).find( ".option-tree-knob-jquery .value" )[ OT_UI.Interval["decrement"]["number_knob_value"] ];
           value = $( value ).attr( "value" );
           number = ( parseInt( value.substr( 0,value.length-1 ) ) - 1);
 
           if( OT_UI.Interval["decrement"]["min"] <= number ) {
 
             value = number.toString() + "%";
-            tag_numeric = $( document ).find( ".option-tree-group-tags-numeric .numeric" )[ OT_UI.Interval["decrement"]["number_tag_numeric"] ];
-            $( tag_numeric ).attr( "value", value );
+            knob_value = $( document ).find( ".option-tree-knob-jquery .value" )[ OT_UI.Interval["decrement"]["number_knob_value"] ];
+            $( knob_value ).attr( "value", value );
 
             OT_UI.Interval["decrement"]["repeat"] = OT_UI.Interval["decrement"]["repeat"] + 1;
           
             if( OT_UI.Interval["decrement"]["repeat"] == 5 ){
 
               clearInterval( OT_UI.Interval["decrement"]["interval"] );
-              OT_UI.Interval["decrement"] = { interval: setInterval( decrement, 100 ), repeat: 5, min: OT_UI.Interval["decrement"]["min"], number_tag_numeric: OT_UI.Interval["decrement"]["number_tag_numeric"] };
+              OT_UI.Interval["decrement"] = { interval: setInterval( decrement, 100 ), repeat: 5, min: OT_UI.Interval["decrement"]["min"], number_knob_value: OT_UI.Interval["decrement"]["number_knob_value"] };
             }
           }
         }
         
-        group_tags = $( document ).find( ".option-tree-group-tags-numeric .format-setting-inner" );
-        tag_numeric = this.parentNode
+        knobs = $( document ).find( ".option-tree-knob-jquery .format-setting-inner" );
+        knob_value = this.parentNode.parentNode;
 
-        for (var number_tag = group_tags.length - 1; number_tag >= 0; number_tag--) {
+        for (var number_knob = knobs.length - 1; number_knob >= 0; number_knob--) {
 
-          if ( group_tags[ number_tag ] == tag_numeric ) {
+          if ( knobs[ number_knob ] == knob_value ) {
             
             break;
           }
         }
 
-        min = $( document ).find( ".option-tree-group-tags-numeric .numeric" ).attr( "min" );
-        OT_UI.Interval["decrement"] = { interval: setInterval( decrement, 270 ), repeat: 0, min: min, number_tag_numeric: number_tag };
+        min = $( document ).find( ".option-tree-knob-jquery .value" ).attr( "min" );
+        OT_UI.Interval["decrement"] = { interval: setInterval( decrement, 270 ), repeat: 0, min: min, number_knob_value: number_knob };
       });
-      $( document ).on( 'mouseup', '.option-tree-group-tags-numeric .increase', function( event ) {
+      $( document ).on( 'mouseup', '.option-tree-knob-jquery .increase', function( event ) {
         event.preventDefault();
         
         clearInterval( OT_UI.Interval["increase"]["interval"] );
       });
-      $( document ).on( 'mouseup', '.option-tree-group-tags-numeric .decrement', function( event ) {
+      $( document ).on( 'mouseup', '.option-tree-knob-jquery .decrement', function( event ) {
         event.preventDefault();
         
         clearInterval( OT_UI.Interval["decrement"]["interval"] );

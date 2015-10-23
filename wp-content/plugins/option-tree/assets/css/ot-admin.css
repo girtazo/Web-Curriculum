@@ -1734,8 +1734,8 @@ input:focus.option-tree-ui-input {
           box-shadow: none !important;
 }
 
-.option-tree-group-tags-percentage .box-input .numeric input { float: left; }
-.option-tree-group-tags-percentage .box-input .numeric img { float: left; }
+.option-tree-group-tags-percentage .box-input .value input { float: left; }
+.option-tree-group-tags-percentage .box-input .value img { float: left; }
 
 /* -------------------------------------------------- 
   :: Upload
@@ -3750,17 +3750,39 @@ a.ui-datepicker-next {
 }
 
 /* -------------------------------------------------- 
-  :: Groups Tags Numeric
+  :: Knob JQuery
   ---------------------------------------------------*/
-.option-tree-group-tags-numeric input.numeric {
+.row :first-child {
+  clear: left;
+}
+.row * {
+  float: left;
+}
+
+.select-wrapper {
+  margin-left: 6px;
+  margin-top: 5px;
+}
+
+.wp-picker-container {
+  margin-top: 7px;
+}
+
+.option-tree-knob-jquery input.value {
   width: 45px !important;
   margin: 0;
   margin-top: 5px;
   border-spacing: 0;
-  float: left;
 }
 
-.option-tree-group-tags-numeric input {
+.option-tree-knob-jquery input.data-width {
+  width: 60px !important;
+  margin: 0;
+  margin-top: 5px;
+  border-spacing: 0;
+}
+
+.option-tree-knob-jquery input.skill {
   width: calc(100% - 226px) !important;
   margin: 0;
   margin-top: 5px;
@@ -3768,23 +3790,22 @@ a.ui-datepicker-next {
   float: left;
 }
 
-.option-tree-group-tags-numeric img {
-  float: left;
+.option-tree-knob-jquery img {
   width: 40px;
   height: 40px;
   cursor: pointer;
 }
 
-.option-tree-group-tags-numeric button {
+.option-tree-knob-jquery button {
   margin-top: 5px !important;
 }
 
-.option-tree-group-tags-numeric .box-input .numeric input {
+.option-tree-knob-jquery .box-input .value input {
   margin-left: 5px !important;
   width: 75px !important;
 }
 
-.option-tree-group-tags-numeric .numeric .box-input img {
+.option-tree-knob-jquery .value .box-input img {
   width: 15px;
   padding-top: 7px;
 }
