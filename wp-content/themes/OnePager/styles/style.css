@@ -645,6 +645,21 @@ ul.sublist li a:hover {
 	z-index: 1;
 }
 
-.knob-basic {
-	
+.knob-box {
+	float: left;
+	min-width: 245px;
+	width: calc( 33% - 22px );
+}
+div.knob-box {
+	margin-left: 11px;
+	margin-right: 11px;
+}
+.knob-box h4 {
+	display: table-cell;
+	float: left;
+	margin-left: 11px;
+	vertical-align: center;
+}
+.knob-drawed {
+	float: left;
 }

@@ -3289,7 +3289,7 @@ if ( ! function_exists( 'ot_type_group_tags' ) ) {
           echo '<div class="format-setting-inner '.$class.'">';
           
             /* build text input */
-            echo '<input type="text" name="' . esc_attr( $field_name ) . '['.$num_text_tag.']" placeholder="Habilidad" id="' . esc_attr( $field_id ) . '_'.$num_text_tag.'" value="' . esc_attr( $text_tag ) . '" class="widefat option-tree-ui-input' . esc_attr( $field_class ) . '" />';
+            echo '<input type="text" name="' . esc_attr( $field_name ) . '['.$num_text_tag.']" placeholder="Habilidad" required id="' . esc_attr( $field_id ) . '_'.$num_text_tag.'" value="' . esc_attr( $text_tag ) . '" class="widefat option-tree-ui-input' . esc_attr( $field_class ) . '" />';
         
             /* remove button */
             echo '<button class="option-tree-ui-button button-remove button button-primary icon ot-icon-minus-circle">'.$field_title.'</button>';
@@ -3311,7 +3311,7 @@ if ( ! function_exists( 'ot_type_group_tags' ) ) {
         echo '<div class="format-setting-inner first-tag last-tag">';
           
           /* build text input */
-          echo '<input type="text" name="' . esc_attr( $field_name ) . '[0]" placeholder="Habilidad" id="' . esc_attr( $field_id ) . '_0" value="' . esc_attr( $field_value ) . '" class="widefat option-tree-ui-input' . esc_attr( $field_class ) . '" />';
+          echo '<input type="text" name="' . esc_attr( $field_name ) . '[0]" placeholder="Habilidad" required id="' . esc_attr( $field_id ) . '_0" value="' . esc_attr( $field_value ) . '" class="widefat option-tree-ui-input' . esc_attr( $field_class ) . '" />';
         
           /* add media button */
           echo '<button class="option-tree-ui-button button-add button button-primary icon ot-icon-plus-circle">'.$field_title.'</button>';
@@ -3393,7 +3393,7 @@ if ( ! function_exists( 'ot_type_knob_jquery' ) ) {
 
             echo '<div class="row">';
             
-              echo '<input type="text" class="skill option-tree-ui-input' . esc_attr( $field_class ) . '" id="' . esc_attr( $field_id ) . '_' . $num_knob . '_skill" name="' . esc_attr( $field_name ) . '['.$num_knob.'][skill]" placeholder="Habilidad" value="' . esc_attr( $knob["skill"] ) . '" />';
+              echo '<input type="text" class="skill option-tree-ui-input' . esc_attr( $field_class ) . '" id="' . esc_attr( $field_id ) . '_' . $num_knob . '_skill" name="' . esc_attr( $field_name ) . '['.$num_knob.'][skill]" placeholder="Habilidad" required value="' . esc_attr( $knob["skill"] ) . '" />';
               echo '<img class="decrement" alt="minus" src="'.OT_URL.'/assets/images/icon-minus.png"/>';
               echo '<input type="text" class="value option-tree-ui-input' . esc_attr( $field_class ) . '" id="' . esc_attr( $field_id ) . '_' . $num_knob . '_options_value" name="' . esc_attr( $field_name ) . '['.$num_knob.'][options][value]" placeholder="Porcentaje" readonly maxlength=4 min=0 max=100 value="' . esc_attr( $knob["options"]["value"] ) . '" />';
               echo '<img class="increase" alt="plus" src="'.OT_URL.'/assets/images/icon-plus.png"/>';

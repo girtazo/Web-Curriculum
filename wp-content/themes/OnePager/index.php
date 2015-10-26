@@ -76,8 +76,7 @@
           <?php
             $content = '';
             $header_section = '';
-            
-            debug_to_console( $section );
+
             /* Load content setting theme*/
             foreach ( $section["settings"] as $key => $setting ) {
 
@@ -97,54 +96,70 @@
                 case 'group_tags':
                   
                   $group_tags = ot_get_option( $setting["id"] );
+                  $last_tag   = count( $group_tags ) -1;
                   $content .= '<div class="page_content group-tags taxonomy_' . $setting["taxonomy"] . ' ' . $setting["class"] . '">';
                   foreach ( $group_tags as $num_tag => $tag ) {
 
-                    if( ! empty( $tag ) ) {
+                      switch ( $num_tag ) {
+                        case 0:
 
-                      $content .= '<div class="tag">' . $tag . '</div>';
-                    }
-                  }
+                          $content .= '<div class="tag first-tag">' . $tag . '</div>';
+                          break;
+                        case $last_tag:
+
+                          $content .= '<div class="tag last-tag">' . $tag . '</div>';
+                          break;
+                        default:
+
+                          $content .= '<div class="tag">' . $tag . '</div>';
+                          break;
+                      } }
+
                   $content .= '</div>';
                   break;
                 case 'knob_jquery':
 
-                  $knobs = ot_get_option( $setting[ "id" ] );
+                  $knobs      = ot_get_option( $setting[ "id" ] );
+                  $last_knob  = count( $knobs ) -1;
                   $content = '
-                  <div class="page_content knob-jquery taxonomy_' . $setting["taxonomy"] . ' ' . $setting["class"] . '">
-                    
-                    <div class="one_fourth">';
+                  <div class="page_content knob-jquery taxonomy_' . $setting["taxonomy"] . ' ' . $setting["class"] . '">';
+
                     foreach ( $knobs as $number_knob => $knob ) {
-              
+
+                      switch ( $number_knob ) {
+                        case 0:
+
+                          $class_order = 'first-knob';
+                          break;
+                        case $last_knob:
+
+                          $class_order = 'last-knob';
+                          break;
+                        default:
+
+                          $class_order = '';
+                          break;
+                      } 
+
                       $content .= '
-                      <div class="knob-basic">
+                      <div class="knob-box ' . $class_order . '" style="height:'.$knob["options"]["data-width"].'px;">
                         
-                        <h4 class="blue">'.$knob['skill'].'</h4>
                         <input class="knob" 
                           data-displayprevious="true"
                           data-readonly="true" ';
                           foreach ( $knob["options"] as $option => $value ) {
                             
-                            $content .= $option . '=';
-                            if( empty( $value ) ) {
-
-                              $content .= '"" ';
-                            } else {
-
-                              $content .= $value . ' ';
-                            }
-                          }
+                            $content .= $option . '='.$value . ' '; }
                         $content .= '
-                        >';
+                        >
+                        <h4 class="blue">'.$knob['skill'].'</h4>';
                     
                       $content .= '
-                      </div>';       
+                      </div>'; 
                     }
-                    
-                    $content .= '
-                    </div>
 
-                  <div>';
+                  $content .= '
+                  </div>';
                   break;
                 default:
                   break;
