@@ -45,7 +45,7 @@
 	// Add RSS links to <head> section
 	automatic_feed_links();
 	
-	//load_theme_textdomain( 'cleanbusiness' );
+	load_theme_textdomain( 'cleanbusiness' );
 	
 	// Load jQuery
 	if ( !is_admin() ) {
@@ -118,86 +118,22 @@
 
 		wp_register_style('main-style',get_template_directory_uri() . '/styles/style.css');
 		wp_enqueue_style('main-style');
+	   
+	   /*wp_register_style('quake-slider-skin',get_template_directory_uri() . '/skins/plain/quake.skin.css');
+	   wp_enqueue_style('quake-slider-skin');*/
 
-		/*wp_register_style('quake-slider-skin',get_template_directory_uri() . '/skins/plain/quake.skin.css');
-		wp_enqueue_style('quake-slider-skin');*/
-
-		/*wp_register_style('ninesixty',get_template_directory_uri() . '/style/960.css');
-		wp_enqueue_style('ninesixty');*/
-		
-
-		if( !function_exists( 'theme_options_option_tree' ) ) {
-
-			function theme_options_option_tree ( $option_theme ) {
-				/** 
-				* Construccion de Opciones de Tema
-				* @option_theme array
-				* desc - theme options
-				*/
-				global $options_theme;
-				global $sections_menu;
-				$options_theme = array();
-				// Recogida de Opciones Menu
-				$sections = get_option( 'option_tree_settings' )["sections"];
-				$settings = get_option( 'option_tree_settings' )["settings"];
-
-				// Construcción de Opciones de Tema
-				foreach ($sections as $key => $section) {
-					
-					$options_theme[$section["id"]] = $section;
-				}
-				
-				foreach ($settings as $key => $setting) {
-
-					$options_theme[$setting["section"]]["settings"][$setting["id"]] = $setting;
-				}
-
-				foreach ($options_theme as $key => $section) {
-
-				  foreach ($section["settings"] as $id => $setting) {
-
-				  	$options_theme[ $section["id"] ]["settings"][ $setting["taxonomy"] ] = $setting;
-				  	unset( $options_theme[ $section["id"] ]["settings"][ $id ] );
-				  	
-				    if( $setting["taxonomy"] = "item_menu" ) {
-
-				      if( ot_get_option( $id ) == "on" ) {
-
-				        $sections_menu[ $section["id"] ] = $options_theme[ $section["id"] ];
-				      }
-				    }
-				  }
-				}
-
-				foreach ($sections_menu as $id => $section) {
-
-					$sections_menu[ $section["id"] ] = $options_theme[ $section["id"] ];
-				}
-			}
-		}
-
-		add_action( 'after_setup_theme', 'theme_options_option_tree', 10, 1 );
+	   /*wp_register_style('ninesixty',get_template_directory_uri() . '/style/960.css');
+       wp_enqueue_style('ninesixty');*/
 	}	
     
     // This theme uses wp_nav_menu() in one location.	
 	
-	if( !function_exists( 'theme_register_menu' ) ) {
-		function theme_register_menu() {
-			register_nav_menu( 'menu_left', __('Menu lateral') );    	
+	if( !function_exists( 'cleanbusiness_register_menu' ) ) {
+		function cleanbusiness_register_menu() {
+			register_nav_menu('primary', __('Primary Menu'),'cleanbusiness');    	
 		}
-		add_action('init', 'theme_register_menu');	
-	}
-
-	if( !function_exists( 'show_menu_left' ) ){
-		
-		function show_menu_left(){
-			
-			$args['theme_location'] = 'menu_left';
-			$args['fallback_cb'] 	= false;
-      		wp_nav_menu( $args );
-		} 
-	}
-	
+		add_action('init', 'cleanbusiness_register_menu');	
+	}	
 	
 	if( ! isset( $content_width ) ) $content_width = 960;	
 	
@@ -411,12 +347,11 @@
 	            }
 	    }
 	}
-	
-	/*-----------------------------------------------------------------------------------*/
-	/* Big Heading shortcode
-	/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+/* Big Heading shortcode
+/*-----------------------------------------------------------------------------------*/
 
-	function clean_business_big_heading( $atts, $content = null ) {
+function clean_business_big_heading( $atts, $content = null ) {
     extract(shortcode_atts(array(
     'highlight'	=> '',    
     'color'	=> '',	
@@ -429,6 +364,6 @@
 	$out =  '<div class="main_heading"><h2>'. $contents.'</h2></div>';
 
     return $out;
-	}
-	add_shortcode('big_heading', 'clean_business_big_heading');
+}
+add_shortcode('big_heading', 'clean_business_big_heading');
 ?>
