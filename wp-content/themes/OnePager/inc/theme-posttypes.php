@@ -11,17 +11,17 @@
 function post_type_portfolio() 
 {
 	$labels = array(
-		'name' => __( 'Portfolios','cleanbusiness'),
-		'singular_name' => __( 'Portfolio','cleanbusiness' ),
-		'add_new' => __('Add New','cleanbusiness'),
-		'add_new_item' => __('Add New Portfolio','cleanbusiness'),
-		'edit_item' => __('Edit Portfolio','cleanbusiness'),
-		'new_item' => __('New Portfolio','cleanbusiness'),
-		'view_item' => __('View Portfolio','cleanbusiness'),
-		'search_items' => __('Search Portfolio','cleanbusiness'),
-		'not_found' =>  __('No portfolio found','cleanbusiness'),
-		'not_found_in_trash' => __('No portfolio found in Trash','cleanbusiness'), 
-		'parent_item_colon' => ''
+		'name' => __( 'post_type_label_name','cleanbusiness'),
+		'singular_name' => __( 'post_type_label_singular_name','cleanbusiness' ),
+		'add_new' => __('post_type_label_add_new','cleanbusiness'),
+		'add_new_item' => __('post_type_label_add_new_item','cleanbusiness'),
+		'edit_item' => __('post_type_label_edit_item','cleanbusiness'),
+		'new_item' => __('post_type_label_new_item','cleanbusiness'),
+		'view_item' => __('post_type_label_view_item','cleanbusiness'),
+		'search_items' => __('post_type_label_search_items','cleanbusiness'),
+		'not_found' =>  __('post_type_label_not_found','cleanbusiness'),
+		'not_found_in_trash' => __('post_type_label_not_found_in_trash','cleanbusiness'), 
+		'parent_item_colon' => 'post_type_label_parent_item_colon'
 	  );
 	  
 	  $args = array(
@@ -33,7 +33,7 @@ function post_type_portfolio()
 		'query_var' => true,
 		'capability_type' => 'post',
 		'hierarchical' => false,
-		'menu_position' => null,
+		'menu_position' => 5,
 		// Uncomment the following line to change the slug; 
 		// You must also save your permalink structure to prevent 404 errors
 		//'rewrite' => array( 'slug' => 'portfolio-slug' ), 
@@ -46,23 +46,22 @@ function post_type_portfolio()
 /* Create the Portfolio Type Taxonomy --------------------------------------------*/
 function build_taxonomies(){
     $labels = array(
-        'name' => __( 'Portfolio Type', 'cleanbusiness' ),
-        'singular_name' => __( 'Portfolio Type', 'cleanbusiness' ),
-        'search_items' =>  __( 'Search Portfolio Types', 'cleanbusiness' ),
-        'popular_items' => __( 'Popular Portfolio Types', 'cleanbusiness' ),
-        'all_items' => __( 'All Portfolio Types', 'cleanbusiness' ),
-        'parent_item' => __( 'Parent Portfolio Type', 'cleanbusiness' ),
-        'parent_item_colon' => __( 'Parent Portfolio Type:', 'cleanbusiness' ),
-        'edit_item' => __( 'Edit Portfolio Type', 'cleanbusiness' ), 
-        'update_item' => __( 'Update Portfolio Type', 'cleanbusiness' ),
-        'add_new_item' => __( 'Add New Portfolio Type', 'cleanbusiness' ),
-        'new_item_name' => __( 'New Portfolio Type Name', 'cleanbusiness' ),
-        'separate_items_with_commas' => __( 'Separate portfolio types with commas', 'cleanbusiness' ),
-        'add_or_remove_items' => __( 'Add or remove portfolio types', 'cleanbusiness' ),
-        'choose_from_most_used' => __( 'Choose from the most used portfolio types', 'cleanbusiness' ),
-        'menu_name' => __( 'Portfolio Types', 'cleanbusiness' )
+        'name' => __( 'taxonomy_label_name', 'cleanbusiness' ),
+        'singular_name' => __( 'taxonomy_label_singular_name', 'cleanbusiness' ),
+        'search_items' =>  __( 'taxonomy_label_search_items', 'cleanbusiness' ),
+        'popular_items' => __( 'taxonomy_label_popular_items', 'cleanbusiness' ),
+        'all_items' => __( 'taxonomy_label_all_items', 'cleanbusiness' ),
+        'parent_item' => __( 'taxonomy_label_parent_item', 'cleanbusiness' ),
+        'parent_item_colon' => __( 'taxonomy_label_ parent_item_colon', 'cleanbusiness' ),
+        'edit_item' => __( 'taxonomy_label_update_item', 'cleanbusiness' ), 
+        'update_item' => __( 'taxonomy_label_update_item', 'cleanbusiness' ),
+        'add_new_item' => __( 'taxonomy_label_add_new_item', 'cleanbusiness' ),
+        'new_item_name' => __( 'taxonomy_label_new_item_name', 'cleanbusiness' ),
+        'separate_items_with_commas' => __( 'taxonomy_label_separate_items_with_commas', 'cleanbusiness' ),
+        'add_or_remove_items' => __( 'taxonomy_label_add_or_remove_items', 'cleanbusiness' ),
+        'choose_from_most_used' => __( 'taxonomy_label_choose_from_most_used', 'cleanbusiness' ),
+        'menu_name' => __( 'taxonomy_label_menu_name', 'cleanbusiness' )
     );
-    
 	register_taxonomy(
 	    'portfolio-type', 
 	    array( __( 'portfolio' )), 

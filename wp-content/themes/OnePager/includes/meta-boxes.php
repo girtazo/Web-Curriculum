@@ -25,7 +25,7 @@ function _custom_meta_boxes() {
     'id'          => 'que cojones es',
     'title'       => 'Mega Titulo',
     'desc'        => '',
-    'pages'       => array( 'post' ),
+    'pages'       => array( 'portfolio' ),
     'context'     => 'normal',
     'priority'    => 'high',
     'fields'      => array(
