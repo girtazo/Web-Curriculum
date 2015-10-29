@@ -1,11 +1,11 @@
-<?php get_header(); ?>
+<?php get_header(); debug_to_console($options_theme);?>
 
-<div id="frame-top"></div>
+<div class="hidden-xs" id="frame-top"></div>
 <div class="container">
   <!-- wrapper -->
   <div class="row">
 
-    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" id="sidebar">
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2" id="sidebar">
 
       <!-- the  sidebar -->
       <!-- logo -->
@@ -16,59 +16,25 @@
       <!-- navigation menu -->
       <ul id="navigation">
       <?php 
-      
-      // Recogida de Opciones Menu
-      $sections = get_option( 'option_tree_settings' )["sections"];
-      $settings = get_option( 'option_tree_settings' )["settings"];
-      
-      // Construcción de Opciones de Tema
-      foreach ($sections as $key => $section) {
 
-        $options_theme[$section["id"]] = $section;
-      }
-
-      foreach ($settings as $key => $setting) {
-        
-        $options_theme[$setting["section"]]["settings"][$setting["id"]] = $setting;
-      }
-      
-      /** 
-      * Construccion de Opciones de Tema
-      * @option_theme array
-      * desc - theme options
-      */
-      foreach ($options_theme as $key => $section) {
-
-        foreach ($section["settings"] as $key => $setting) {
-
-          if( $setting["taxonomy"] = "item_menu" ) {
-
-           if( ot_get_option( $setting["id"] ) == "on" ) {
-
-              $sections_menu[] = $section;
-            }
-          }
-        }
-      }
-
-      wp_nav_menu();
+        show_menu_left();
 
       if( count( $sections_menu ) ){
 
-        foreach ($sections_menu as $key => $section_menu) {
+        foreach ( $sections_menu as $id => $section ) {
         ?>
-          <li><a href="#<?=$section_menu[id]?>"><?=$section_menu[title]?></a></li>
+          <li><a href="#<?=$id?>"><?=ot_get_option( $section["settings"]["header_section"]["id"] )?></a></li>
         <?php
         }
       }
       ?>
       </ul>
     </div>
-    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3" id="container">
+    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-sm-offset-3 col-md-offset-3 col-lg-offset-2" id="container">
 
       <?php
       if( count( $options_theme ) ){
-      
+
         foreach ( $options_theme as $key => $section ) {
         ?>
         
@@ -78,26 +44,26 @@
             $header_section = '';
 
             /* Load content setting theme*/
-            foreach ( $section["settings"] as $key => $setting ) {
+            foreach ( $section["settings"] as $taxonomy => $setting ) {
 
-              switch ( $setting["taxonomy"] ) {
+              switch ( $taxonomy ) {
 
                 case 'header_section':
                   
                   if ( ! empty(ot_get_option( $setting["id"] ) ) )  {
                     
-                    $header_section = '<h3 class="page_title taxonomy_' . $setting["taxonomy"] . ' ' . $setting["class"] . '">' . ot_get_option( $setting["id"] ) . '</h3>';
+                    $header_section = '<h3 class="page_title taxonomy_' . $taxonomy . ' ' . $setting["class"] . '">' . ot_get_option( $setting["id"] ) . '</h3>';
                   }
                   break;
                 case 'HTML':
                   
-                  $content =  '<div class="page_content html taxonomy_' . $setting["taxonomy"] . ' ' . $setting["class"] . '">' . ot_get_option( $setting["id"] ) . '</div>';
+                  $content =  '<div class="page_content html taxonomy_' . $taxonomy . ' ' . $setting["class"] . '">' . ot_get_option( $setting["id"] ) . '</div>';
                   break;
                 case 'group_tags':
                   
                   $group_tags = ot_get_option( $setting["id"] );
                   $last_tag   = count( $group_tags ) -1;
-                  $content .= '<div class="page_content group-tags taxonomy_' . $setting["taxonomy"] . ' ' . $setting["class"] . '">';
+                  $content .= '<div class="page_content group-tags taxonomy_' . $taxonomy . ' ' . $setting["class"] . '">';
                   foreach ( $group_tags as $num_tag => $tag ) {
 
                       switch ( $num_tag ) {
@@ -122,7 +88,7 @@
                   $knobs      = ot_get_option( $setting[ "id" ] );
                   $last_knob  = count( $knobs ) -1;
                   $content = '
-                  <div class="page_content knob-jquery taxonomy_' . $setting["taxonomy"] . ' ' . $setting["class"] . '">';
+                  <div class="page_content row knob-jquery taxonomy_' . $taxonomy . ' ' . $setting["class"] . '">';
 
                     foreach ( $knobs as $number_knob => $knob ) {
 
@@ -142,7 +108,7 @@
                       } 
 
                       $content .= '
-                      <div class="knob-box ' . $class_order . '" style="height:'.$knob["options"]["data-width"].'px;">
+                      <div class="knob-box col-xs-12 col-sm-6 col-md-6 col-lg-4 ' . $class_order . '">
                         
                         <input class="knob" 
                           data-displayprevious="true"
@@ -194,18 +160,10 @@
                   $enableslider=ot_get_option('my_checkbox');
                   
                   $slides = ot_get_option( 'my_slider',array());
-                  $client_settings = ot_get_option( 'client_settings',array());
-                  $industry_settings = ot_get_option( 'industry_settings',array());
-                  $skills = ot_get_option( 'skills_settings',array());
-                  $aboutus_desc = ot_get_option( 'aboutus_desc',array());
-                  $industry_desc = ot_get_option( 'industry_desc',array());
                   $portfolio_desc = ot_get_option( 'portfolio_desc',array());
-                  $clients_desc = ot_get_option( 'clients_desc',array());
                   $social_facebook = ot_get_option( 'social_facebook',array());
                   $social_twitter = ot_get_option( 'social_twitter',array());
                   $social_linkedin = ot_get_option( 'social_linkedin',array());
-                  
-                  
                   
                   if ( ! empty( $slides ) && $enableslider[0]=='yes' ) {
                     
@@ -223,9 +181,6 @@
             </div>
 
           <?php } ?>
-          <div class="space"> </div>
-          <div class="clear"> </div>
-          <!-- services -->
 
           <?php $i=0; if (have_posts()) : while (have_posts()) : the_post(); ?>
 
@@ -261,13 +216,6 @@
           <?php endif; ?>
 
           <div class="clear"> </div>
-        </div>
-      </div>
-      <div class="page" id="about"> 
-        <!-- page about -->
-        <h3 class="page_title"> About Us</h3>
-        <div class="page_content">
-          <?php echo $aboutus_desc;  ?>
         </div>
       </div>
       <div class="page" id="portfolio"> 
@@ -320,60 +268,6 @@
             <?php endwhile; ?>
             <!-- works --> 
           </div>
-          <div class="clear"> </div>
-        </div>
-      </div>
-      <div class="page" id="skills"> 
-        <!-- page skills -->
-        <h3 class="page_title"> Our Skills</h3>
-        <div class="page_content"> 
-          <?php if ( ! empty( $skills ) ) {
-
-            foreach( $skills as $skill ) {
-
-              echo '<div class="one_fourth">
-              <div class="column_content">
-                <h4 class="blue">'.$skill['title'].'</h4>
-                <input class="knob" data-readonly="true" data-width="120" data-min="0" data-angleoffset="0"
-                                    data-displayprevious="true" value="'.$skill['skill_value'].'" data-fgcolor="#cfdee7" data-bgcolor="#0d4667">
-              </div>
-              </div>' ;
-            }
-          } ?>
-          <div class="clear"> </div>
-        </div>
-      </div>
-      <div class="page" id="industries"> 
-        <!-- page industries -->
-        <h3 class="page_title"> Industries We Serve!</h3>
-        <div class="page_content">
-          <?php echo $industry_desc;  ?>
-          <div class="space"> </div>
-          <div class="clear"> </div>
-          <ul class="sublist">
-            <?php foreach( $industry_settings as $industry ) {
-              echo '<li><a href="'.$industry['industry_url'].'">'.$industry['title'].'</a></li>';
-            }  ?>
-          </ul>
-          <div class="clear"> </div>
-        </div>
-      </div>
-      <div class="page" id="myclients"> 
-        <!-- page clients -->
-        <h3 class="page_title"> Our Clients</h3>
-        <div class="page_content">
-          <?php if(isset($clients_desc)) {echo $clients_desc;}  ?>
-         
-          <div class="space"> </div>
-          <div class="clear"> </div>
-          <ul id="clients" class="grid">
-
-          <?php foreach( $client_settings as $client ) {
-
-            echo '<li class="'.$client['title'].'"><a href="'.$client['client_url'].'" rel="'.$client['title'].'"> <img src="'.$client['client_image'].'" alt="'.$client['title'].'"></a></li>';
-          } ?>
-           
-          </ul>
           <div class="clear"> </div>
         </div>
       </div>

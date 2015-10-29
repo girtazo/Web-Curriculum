@@ -75,8 +75,6 @@ div#wrap {
 	margin:0 auto!important
 }
 div#sidebar {
-	position: fixed;
-	height:100%;
 	background:#2c2c2c;
 	border-right:1px solid #2e2f2f;
 }
@@ -99,7 +97,7 @@ ul#navigation {
 	margin-right:-5px;
 	position:relative;
 	width:220px;
-	z-index:999
+	z-index:999;
 }
 ul#navigation li {
 	border:none;
@@ -132,7 +130,6 @@ div#container {
 	background:#619ec2;
 }
 div.page {
-	margin-bottom:5px solid #dbdbdb;
 	margin-bottom:0;
 	padding-top:20px
 }
@@ -646,20 +643,58 @@ ul.sublist li a:hover {
 }
 
 .knob-box {
-	float: left;
-	min-width: 245px;
-	width: calc( 33% - 22px );
-}
-div.knob-box {
-	margin-left: 11px;
-	margin-right: 11px;
+	margin-bottom: 15px;
+	display: table;
 }
 .knob-box h4 {
+	margin: 0px;
 	display: table-cell;
-	float: left;
-	margin-left: 11px;
-	vertical-align: center;
+	vertical-align: middle;
+	text-align: center;
 }
 .knob-drawed {
 	float: left;
+	height: 100px !important;
+}
+
+/* Media Queries Bootstrap */
+
+/* Large devices */
+@media ( min-width: 1170px  ) {
+
+	div#sidebar {
+		position: fixed;
+		height:100%;
+	}
+}
+
+/* Medium devices */
+@media ( min-width: 970px  ) {
+
+	div#sidebar {
+		position: fixed;
+		height:100%;
+	}
+}
+
+/* Small devices */
+@media ( min-width: 768px  ) {
+
+	div#sidebar {
+		position: fixed;
+		height:100%;
+	}
+}
+
+/* Small devices */
+@media ( max-width: 768px  ) {
+
+	#navigation li a{
+		text-align: center !important;
+	}
+	ul#navigation{
+		position: initial;
+		width:initial;
+		z-index:initial;
+	}
 }
