@@ -257,15 +257,30 @@
 /*Codigo Extra*/
 function themename_customize_register($wp_customize){
 
-    debug_to_console("wp_customize");
-    
-    
     $wp_customize->add_section('photo', array(
         'title'    => __('Foto Curriculum', 'onepager'),
         'description' => 'Sube una foto',
         'priority' => 120
     ));
-    /*
+    
+    $wp_customize->add_setting('image_curriculum', array(
+        'default'           => get_template_directory_uri() . '/images/foto_curriculum.jpg',
+        'capability'        => 'edit_theme_options',
+        'type'              => 'option'
+ 
+    ));
+ 
+    $wp_customize->add_control( new WP_Customize_Upload_Control($wp_customize, 'image_upload', array(
+        'label'      => __( 'Foto Curriculum', 'onepager' ),
+        'section'  => 'photo',
+        'settings' => 'image_curriculum'
+    )));
+    /*$wp_customize->add_section('menu', array(
+        'title'    => __('Menu', 'themename'),
+        'description' => 'Selecciona el menu a mostrar',
+        'priority' => 120
+    ));
+ 
     //  =============================
     //  = Text Input                =
     //  =============================
@@ -339,23 +354,23 @@ function themename_customize_register($wp_customize){
         )
     ));
  
-    */
+ 
     //  =============================
     //  = Image Upload              =
     //  =============================
-    $wp_customize->add_setting('image_curriculum', array(
-        'default'           => 'foto_curriculum.jpg',
+    $wp_customize->add_setting('themename_theme_options[image_upload_test]', array(
+        'default'           => 'image.jpg',
         'capability'        => 'edit_theme_options',
-        'type'              => 'option'
+        'type'           => 'option'
  
     ));
  
-    $wp_customize->add_control( new WP_Customize_Upload_Control($wp_customize, 'image_upload', array(
-        'label'      => __( 'Foto Curriculum', 'onepager' ),
-        'section'  => 'photo',
-        'settings' => 'image_curriculum'
+    $wp_customize->add_control( new WP_Customize_Image_Control($wp_customize, 'image_upload_test', array(
+        'label'    => __('Image Upload Test', 'themename'),
+        'section'  => 'menu',
+        'settings' => 'themename_theme_options[image_upload_test]'
     )));
-    /*
+ 
     //  =============================
     //  = File Upload               =
     //  =============================
@@ -440,7 +455,6 @@ function themename_customize_register($wp_customize){
       'type'    => 'select',
       'choices' => $cats,
     ));*/
-  debug_to_console($wp_customize);
 }
  
 add_action('customize_register', 'themename_customize_register');

@@ -1,20 +1,21 @@
 jQuery(document).ready(function() {
 	
 	jQuery('#cb_portfolio_upload_images').click(function() {
-		
+		alert("cb_portfolio_upload_images");
 	    var tbURL = jQuery('#add_image').attr('href');
 	    
 	    if(typeof tbURL === 'undefined') {
 	        tbURL = jQuery('#content-add_media').attr('href');
 	    }
-	    
+	    alert("entra");
 		tb_show('', tbURL);
 		return false;
 		
 	});
 	//upload button for client widget
 	jQuery('.client-image-upload').click(function() {
-		var button = jQuery(this);	
+		
+		var button = jQuery(this);
 		window.send_to_editor = function(html) 		
 		{
 			imgurl = jQuery('img',html).attr('src');
@@ -28,7 +29,7 @@ jQuery(document).ready(function() {
 		return false;
 			
 		});
-	/*jQuery('#cb_image_button').click(function() {
+	jQuery('#cb_image_button').click(function() {
 		
 		window.send_to_editor = function(html) 
 		
@@ -42,6 +43,6 @@ jQuery(document).ready(function() {
 		tb_show('', 'media-upload.php?post_id=1&amp;type=image&amp;TB_iframe=true');
 		return false;
 		
-	});*/
+	});
  
 });

@@ -365,17 +365,17 @@ if ( ! class_exists( 'OT_Loader' ) ) {
         'ot-functions-compat',
         'ot-settings-api'
       );
-      debug_to_console("OT_META_BOXES:".OT_META_BOXES);
+      
       /* include the meta box api */
       if ( OT_META_BOXES == true ) {
         $files[] = 'ot-meta-box-api';
       }
-      debug_to_console("OT_POST_FORMATS:".OT_POST_FORMATS);
+      
       /* include the post formats api */
       if ( OT_META_BOXES == true && OT_POST_FORMATS == true ) {
         $files[] = 'ot-post-formats-api';
       }
-      debug_to_console("OT_SHOW_PAGES:".OT_SHOW_PAGES);
+      
       /* include the settings & docs pages */
       if ( OT_SHOW_PAGES == true ) {
         $files[] = 'ot-functions-settings-page';
@@ -384,8 +384,7 @@ if ( ! class_exists( 'OT_Loader' ) ) {
       
       /* include the cleanup api */
       $files[] = 'ot-cleanup-api';
-      debug_to_console("Paginas cargadas:");
-      debug_to_console($files);
+      
       /* require the files */
       foreach ( $files as $file ) {
         $this->load_file( OT_DIR . "includes" . DIRECTORY_SEPARATOR . "{$file}.php" );
@@ -623,9 +622,7 @@ if ( ! class_exists( 'OT_Loader' ) ) {
      * AJAX utility function for adding a new setting.
      */
     public function add_setting() {
-      debug_to_console("function -> add_setting");
       echo ot_settings_view( $_REQUEST['name'], $_REQUEST['count'] );
-      debug_to_console($_REQUEST);
       die();
     }
     

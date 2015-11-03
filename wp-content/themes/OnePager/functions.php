@@ -1,134 +1,135 @@
 <?php
 	
-	/* 
-	 * Loads the Options Panel
-	 *
-	 * If you're loading from a child theme use stylesheet_directory
-	 * instead of template_directory
-	 */
-	 
-	
-	
-	
-	
-	/**
-	 * Optional: set 'ot_show_pages' filter to false.
-	 * This will hide the settings & documentation pages.
-	*/
-	/*Modificacion*/
-	/*Codigo Original
-	add_filter( 'ot_show_pages', '__return_false' );
-
-	add_filter( 'ot_show_pages', '__return_true' );
-
-
-	/**
- 	 * Required: set 'ot_theme_mode' filter to true.
- 	*/
-	/*+add_filter( 'ot_theme_mode', '__return_true' );
-
-	/**
-	 * Required: include OptionTree.
-	*/
-	/*+include_once( 'option-tree/ot-loader.php' );
-	/**
-	 * Theme Options
-	*/
-	/*+include_once( 'includes/theme-options.php' );
-	/*Codigo Modificado*/
+	/* Theme Options*/
 	include_once( 'includes/theme-options.php' );
-	/*Fin Codigo Modificado*/
+	
 	/* Meta Boxes*/
 	require( trailingslashit( get_template_directory() ) . 'includes/meta-boxes.php' );
-	
 
 	// Add RSS links to <head> section
-	automatic_feed_links();
+	add_theme_support('automatic_feed_links');
 	
 	//load_theme_textdomain( 'cleanbusiness' );
 	
-	// Load jQuery
-	if ( !is_admin() ) {
+	// Load files JS
+	if( !function_exists( 'registers_js' ) ) {
 
-		/* JS */
-		wp_enqueue_script('jquery');
+		function registers_js() {
 
-		wp_register_script('jquery_1.7.1',get_template_directory_uri() . '/js/jquery-1.7.1.min.js',true);
-		wp_enqueue_script('jquery_1.7.1');
+			if( !is_admin() ) {
 
-		wp_register_script('min',get_template_directory_uri() . '/js/min.js',true);
-		wp_enqueue_script('min');
+				wp_enqueue_script('jquery');
 
-		wp_register_script('cb-script',get_template_directory_uri() . '/js/script.js',true);
-		wp_enqueue_script('cb-script');
+				wp_register_script('jquery_1.7.1',get_template_directory_uri() . '/js/jquery-1.7.1.min.js',true);
+				wp_enqueue_script('jquery_1.7.1');
 
-		wp_register_script('isotope',get_template_directory_uri() . '/js/jquery.isotope.min.js',true);
-		wp_enqueue_script('isotope');
+				wp_register_script('min',get_template_directory_uri() . '/js/min.js',true);
+				wp_enqueue_script('min');
+
+				wp_register_script('cb-script',get_template_directory_uri() . '/js/script.js',true);
+				wp_enqueue_script('cb-script');
+
+				wp_register_script('isotope',get_template_directory_uri() . '/js/jquery.isotope.min.js',true);
+				wp_enqueue_script('isotope');
+				
+				wp_register_script('smooth-scroll',get_template_directory_uri() . '/js/jquery.smooth-scroll.min.js',true);
+				wp_enqueue_script('smooth-scroll');
+
+				wp_register_script('waypoints',get_template_directory_uri() . '/js/waypoints.min.js',true);
+				wp_enqueue_script('waypoints');
+
+				wp_register_script('setup',get_template_directory_uri() . '/js/setup.js',true);
+				wp_enqueue_script('setup');
+
+				wp_register_script('quake-slider-script',get_template_directory_uri() . '/js/quake.slider.js',true);
+				wp_enqueue_script('quake-slider-script');
+
+				wp_register_script('pretty-photo',get_template_directory_uri() . '/js/jquery.prettyPhoto.js',true);
+				wp_enqueue_script('pretty-photo');
+				
+				wp_register_script('tipsy',get_template_directory_uri() . '/js/jquery.tipsy.js',true);
+				wp_enqueue_script('tipsy');
+
+				wp_register_script('flexslider',get_template_directory_uri() . '/js/jquery.flexslider-min.js',true);
+				wp_enqueue_script('flexslider');
+				
+				wp_register_script('knob',get_template_directory_uri() . '/js/jquery.knob.js',true);
+				wp_enqueue_script('knob');
+
+				/* Bootstrap */
+				wp_register_script('bootstrap',get_template_directory_uri() . '/js/bootstrap.min.js',true);
+				wp_enqueue_script('bootstrap');
+			}
+		}
+		add_action( 'wp_enqueue_scripts', 'registers_js', 10, 1 );
+	}
+
+	// Load stylesheet CSS
+	if( !function_exists( 'registers_css' ) ) {
+
+		function registers_css() {
+
+			if( !is_admin() ) {
+
+				wp_register_style('fancy-box-style',get_template_directory_uri() . '/styles/fancybox.css');
+				wp_enqueue_style('fancy-box-style');
+
+				wp_register_style('quake-slider-style',get_template_directory_uri() . '/styles/quake.slider.css');
+				wp_enqueue_style('quake-slider-style');
+
+				wp_register_style('pretty-photo-style',get_template_directory_uri() . '/styles/prettyPhoto.css');
+				wp_enqueue_style('pretty-photo-style');
+
+				wp_register_style('tipsy-style',get_template_directory_uri() . '/styles/tipsy.css');
+				wp_enqueue_style('tipsy-style');
+
+				wp_register_style('flex-slider-style',get_template_directory_uri() . '/styles/flexslider.css');
+				wp_enqueue_style('flex-slider-style');
+				
+				/* Bootstrap */
+				wp_register_style('bootstrap-style',get_template_directory_uri() . '/styles/bootstrap/bootstrap.min.css');
+				wp_enqueue_style('bootstrap-style');
+
+				wp_register_style('bootstrap-theme-style',get_template_directory_uri() . '/styles/bootstrap/bootstrap-theme.min.css');
+				wp_enqueue_style('bootstrap-theme-style');
+
+				wp_register_style('main-style',get_template_directory_uri() . '/styles/style.css');
+				wp_enqueue_style('main-style');
+
+				/*wp_register_style('quake-slider-skin',get_template_directory_uri() . '/skins/plain/quake.skin.css');
+				wp_enqueue_style('quake-slider-skin');*/
+
+				/*wp_register_style('ninesixty',get_template_directory_uri() . '/style/960.css');
+				wp_enqueue_style('ninesixty');*/
+			}
+		}
+		add_action( 'wp_enqueue_scripts', 'registers_css', 10, 1 );
+	}	
+    
+    // Registers Menus	
+	if( !function_exists( 'theme_register_menu' ) ) {
+		function theme_register_menu() {
+			register_nav_menu( 'menu_left', __('Menu lateral') );    	
+		}
+		add_action('init', 'theme_register_menu');	
+	}
+
+	if( !function_exists( 'show_menu_left' ) ){
 		
-		wp_register_script('smooth-scroll',get_template_directory_uri() . '/js/jquery.smooth-scroll.min.js',true);
-		wp_enqueue_script('smooth-scroll');
+		function show_menu_left(){
+			
+			$args['theme_location'] = 'menu_left';
+			$args['fallback_cb'] 	= false;
+      		wp_nav_menu( $args );
+		} 
+	}	
 
-		wp_register_script('waypoints',get_template_directory_uri() . '/js/waypoints.min.js',true);
-		wp_enqueue_script('waypoints');
-
-		wp_register_script('setup',get_template_directory_uri() . '/js/setup.js',true);
-		wp_enqueue_script('setup');
-
-		wp_register_script('quake-slider-script',get_template_directory_uri() . '/js/quake.slider.js',true);
-		wp_enqueue_script('quake-slider-script');
-
-		wp_register_script('pretty-photo',get_template_directory_uri() . '/js/jquery.prettyPhoto.js',true);
-		wp_enqueue_script('pretty-photo');
-		
-		wp_register_script('tipsy',get_template_directory_uri() . '/js/jquery.tipsy.js',true);
-		wp_enqueue_script('tipsy');
-
-		wp_register_script('flexslider',get_template_directory_uri() . '/js/jquery.flexslider-min.js',true);
-		wp_enqueue_script('flexslider');
-		
-		wp_register_script('knob',get_template_directory_uri() . '/js/jquery.knob.js',true);
-		wp_enqueue_script('knob');
-
-		/* Bootstrap */
-		wp_register_script('bootstrap',get_template_directory_uri() . '/js/bootstrap.min.js',true);
-		wp_enqueue_script('bootstrap');
-
-		/* CSS Styles */
-		wp_register_style('fancy-box-style',get_template_directory_uri() . '/styles/fancybox.css');
-		wp_enqueue_style('fancy-box-style');
-
-		wp_register_style('quake-slider-style',get_template_directory_uri() . '/styles/quake.slider.css');
-		wp_enqueue_style('quake-slider-style');
-
-		wp_register_style('pretty-photo-style',get_template_directory_uri() . '/styles/prettyPhoto.css');
-		wp_enqueue_style('pretty-photo-style');
-
-		wp_register_style('tipsy-style',get_template_directory_uri() . '/styles/tipsy.css');
-		wp_enqueue_style('tipsy-style');
-
-		wp_register_style('flex-slider-style',get_template_directory_uri() . '/styles/flexslider.css');
-		wp_enqueue_style('flex-slider-style');
-		
-		/* Bootstrap */
-		wp_register_style('bootstrap-style',get_template_directory_uri() . '/styles/bootstrap/bootstrap.min.css');
-		wp_enqueue_style('bootstrap-style');
-
-		wp_register_style('bootstrap-theme-style',get_template_directory_uri() . '/styles/bootstrap/bootstrap-theme.min.css');
-		wp_enqueue_style('bootstrap-theme-style');
-
-		wp_register_style('main-style',get_template_directory_uri() . '/styles/style.css');
-		wp_enqueue_style('main-style');
-
-		/*wp_register_style('quake-slider-skin',get_template_directory_uri() . '/skins/plain/quake.skin.css');
-		wp_enqueue_style('quake-slider-skin');*/
-
-		/*wp_register_style('ninesixty',get_template_directory_uri() . '/style/960.css');
-		wp_enqueue_style('ninesixty');*/
-		
+	if( is_plugin_active("option-tree/ot-loader.php" ) ){
 
 		if( !function_exists( 'theme_options_option_tree' ) ) {
 
 			function theme_options_option_tree ( $option_theme ) {
+
 				/** 
 				* Construccion de Opciones de Tema
 				* @option_theme array
@@ -137,6 +138,7 @@
 				global $options_theme;
 				global $sections_menu;
 				$options_theme = array();
+				
 				// Recogida de Opciones Menu
 				$sections = get_option( 'option_tree_settings' )["sections"];
 				$settings = get_option( 'option_tree_settings' )["settings"];
@@ -174,30 +176,10 @@
 					$sections_menu[ $section["id"] ] = $options_theme[ $section["id"] ];
 				}
 			}
-		}
-
-		add_action( 'after_setup_theme', 'theme_options_option_tree', 10, 1 );
-	}	
-    
-    // This theme uses wp_nav_menu() in one location.	
-	
-	if( !function_exists( 'theme_register_menu' ) ) {
-		function theme_register_menu() {
-			register_nav_menu( 'menu_left', __('Menu lateral') );    	
-		}
-		add_action('init', 'theme_register_menu');	
-	}
-
-	if( !function_exists( 'show_menu_left' ) ){
-		
-		function show_menu_left(){
 			
-			$args['theme_location'] = 'menu_left';
-			$args['fallback_cb'] 	= false;
-      		wp_nav_menu( $args );
-		} 
+			add_action( 'after_setup_theme', 'theme_options_option_tree', 10, 1 );
+		}
 	}
-	
 	
 	if( ! isset( $content_width ) ) $content_width = 960;	
 	
@@ -222,7 +204,7 @@
 	}
 	//Register our sidebars and widgetized areas.
 
-	function cb_widgets_init() {
+	/*function cb_widgets_init() {
 				
 		register_sidebar( array(
 			'name' => __( 'Sidebar Widgets', 'cleanbusiness' ),
@@ -295,7 +277,7 @@
 	include("inc/widget-partners.php");	
 	include("inc/widget-locations.php");
 	include("inc/widget-clients.php");
-	include("inc/widget-ourteam.php");
+	include("inc/widget-ourteam.php");*/
 	include("inc/theme-postmeta.php");
 	include("inc/theme-posttypes.php");
 	include("inc/theme-portfoliometa.php");
@@ -411,12 +393,11 @@
 	            }
 	    }
 	}
-	
-	/*-----------------------------------------------------------------------------------*/
-	/* Big Heading shortcode
-	/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------*/
+/* Big Heading shortcode
+/*-----------------------------------------------------------------------------------*/
 
-	function clean_business_big_heading( $atts, $content = null ) {
+function clean_business_big_heading( $atts, $content = null ) {
     extract(shortcode_atts(array(
     'highlight'	=> '',    
     'color'	=> '',	
@@ -429,6 +410,6 @@
 	$out =  '<div class="main_heading"><h2>'. $contents.'</h2></div>';
 
     return $out;
-	}
-	add_shortcode('big_heading', 'clean_business_big_heading');
+}
+add_shortcode('big_heading', 'clean_business_big_heading');
 ?>

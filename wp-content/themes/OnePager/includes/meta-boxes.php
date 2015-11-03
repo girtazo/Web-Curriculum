@@ -22,7 +22,7 @@ function _custom_meta_boxes() {
    * the OptionTree Meta Box API Class.
    */
   $my_meta_box = array(
-    'id'          => 'que cojones es',
+    'id'          => 'megatitulo',
     'title'       => 'Mega Titulo',
     'desc'        => '',
     'pages'       => array( 'portfolio' ),
@@ -69,6 +69,5 @@ function _custom_meta_boxes() {
    * Register our meta boxes using the 
    * ot_register_meta_box() function.
    */
-  ot_register_meta_box( $my_meta_box );
-
+  /*ot_register_meta_box( $my_meta_box );*/
 }

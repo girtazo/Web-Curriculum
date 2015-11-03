@@ -1,4 +1,4 @@
-<?php get_header(); debug_to_console($options_theme);?>
+<?php get_header();?>
 
 <div class="hidden-xs" id="frame-top"></div>
 <div class="container">
