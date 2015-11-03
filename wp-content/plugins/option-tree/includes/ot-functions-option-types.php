@@ -32,9 +32,7 @@
 if ( ! function_exists( 'ot_display_by_type' ) ) {
 
   function ot_display_by_type( $args = array() ) {
-    debug_to_console("function -> ot_display_by_type");
-    debug_to_console("--------args-------");
-    debug_to_console($args);
+    
     /* allow filters to be executed on the array */
     $args = apply_filters( 'ot_display_by_type', $args );
     
@@ -3327,7 +3325,7 @@ if ( ! function_exists( 'ot_type_group_tags' ) ) {
 }
 
 /**
- * group tags type.
+ * knob Jquery type.
  *
  * See @ot_display_by_type to see the full list of available arguments.
  *
@@ -3492,5 +3490,6 @@ if ( ! function_exists( 'ot_type_knob_jquery' ) ) {
   }
   
 }
+
 /* End of file ot-functions-option-types.php */
 /* Location: ./includes/ot-functions-option-types.php */
