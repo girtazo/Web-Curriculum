@@ -74,9 +74,31 @@ div#wrap {
 	position:relative;
 	margin:0 auto!important
 }
+.fixed {
+	position: fixed;
+}
+.vertical-max{
+	height: 100%
+}
+#frame-top {
+	position: fixed;
+	height: 32px;
+	width: 100%;
+	background-color: #195f88;
+	z-index: 2;
+}
+#frame-top-container {
+	height: 15px;
+	margin-left: -10px;
+	background-color: #619ec2;
+	box-shadow: 5px 2px 37px #619ec2;
+	z-index: 1;
+}
 div#sidebar {
 	background:#2c2c2c;
 	border-right:1px solid #2e2f2f;
+	height: 100%;
+	margin-top: 32px;
 }
 a#logo {
 	text-align:center;
@@ -92,12 +114,13 @@ a#logo {
 	transition:all 300ms;
 	padding: 15px 0 9px 0;
 }
+#logo img {
+	width: 100%
+}
 ul#navigation {
 	margin-top:25px;
 	margin-right:-5px;
 	position:relative;
-	width:220px;
-	z-index:999;
 }
 ul#navigation li {
 	border:none;
@@ -634,14 +657,6 @@ ul.sublist li a:hover {
 	color: #000000;
 }
 
-#frame-top {
-	position: fixed;
-	height: 32px;
-	width: 100%;
-	background-color: #195f88;
-	z-index: 1;
-}
-
 .knob-box {
 	margin-bottom: 15px;
 	display: table;
@@ -660,39 +675,19 @@ ul.sublist li a:hover {
 /* Media Queries Bootstrap */
 
 /* Large devices */
-@media ( min-width: 1170px  ) {
 
-	div#sidebar {
-		position: fixed;
-		height:100%;
-	}
-}
 
 /* Medium devices */
-@media ( min-width: 970px  ) {
 
-	div#sidebar {
-		position: fixed;
-		height:100%;
-	}
-}
 
 /* Small devices */
-@media ( min-width: 768px  ) {
 
-	div#sidebar {
-		position: fixed;
-		height:100%;
-	}
-}
-
-/* Small devices */
 @media ( max-width: 768px  ) {
 
-	#navigation li a{
+	ul#navigation li a{
 		text-align: center !important;
 	}
-	ul#navigation{
+	#sidebar-fixed{
 		position: initial;
 		width:initial;
 		z-index:initial;

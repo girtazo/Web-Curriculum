@@ -4,34 +4,59 @@
 <div class="container">
   <!-- wrapper -->
   <div class="row">
+    <!-- the  sidebar -->
+    <div id="sidebar-fixed" class="container vertical-max fixed">
 
-    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2" id="sidebar">
+      <div class="col-xs-12 col-sm-4 col-md-3 col-lg-4" id="sidebar">
+        
+        <!-- logo -->
+        <div class="row">
 
-      <!-- the  sidebar -->
-      <!-- logo -->
-      <a href="<?php echo $link1; ?>" id="logo">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        
+            <a href="<?php echo $link1; ?>" id="logo">
 
-        <img src="<?php $logo=ot_get_option('logo_image'); echo $logo; ?>" alt=""  /> 
-      </a> 
-      <!-- navigation menu -->
-      <ul id="navigation">
-      <?php 
+              <img src=<?php echo '"' . $logo . '"'; ?> alt="curriculum image"  /> 
+          
+            </a>
 
-        show_menu_left();
+          </div>
+        </div>
+        <div class="row">
 
-      if( count( $sections_menu ) ){
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          
+            <!-- navigation menu -->
+            <ul id="navigation">
+            <?php
 
-        foreach ( $sections_menu as $id => $section ) {
-        ?>
-          <li><a href="#<?=$id?>"><?=ot_get_option( $section["settings"]["header_section"]["id"] )?></a></li>
-        <?php
-        }
-      }
-      ?>
-      </ul>
+              show_menu_left();
+
+              if( count( $sections_menu ) ){
+
+                foreach ( $sections_menu as $id => $section ) {
+                ?>
+                  <li><a href="#<?=$id?>"><?=ot_get_option( $section["settings"]["header_section"]["id"] )?></a></li>
+                <?php
+                }
+              }
+            ?>
+            </ul>
+
+          </div>
+        </div>
+
+      </div>
+
     </div>
-    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10 col-sm-offset-3 col-md-offset-3 col-lg-offset-2" id="container">
 
+    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-8 col-sm-offset-4 col-md-offset-3 col-lg-offset-4" id="container">
+      
+      <div class="container fixed">
+
+        <div id="frame-top-container" class="col-xs-12 col-sm-8 col-md-9 col-lg-8 col-sm-offset-4"></div>
+
+      </div>
       <?php
       if( count( $options_theme ) ){
 
@@ -141,7 +166,9 @@
         <?php
         }
       }
+
       ?>
+      
       <!-- page container -->
       <div class="page" id="home"> 
         <!-- page home -->
