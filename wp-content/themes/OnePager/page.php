@@ -1,29 +1,77 @@
-<?php get_header(); ?>
+<?php get_header();?>
 
-	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-			
-		<div class="post" id="post-<?php the_ID(); ?>">
+<div class="hidden-xs" id="frame-top"></div>
+<div class="container">
+  <!-- wrapper -->
+  <div class="row">
+    <!-- the  sidebar -->
+    <div id="sidebar-fixed" class="container vertical-max fixed">
 
-			<h2><?php the_title(); ?></h2>
+      <div class="col-xs-12 col-sm-4 col-md-3 col-lg-4" id="sidebar">
+        
+        <!-- logo -->
+        <div class="row">
 
-			<?php include (TEMPLATEPATH . '/inc/meta.php' ); ?>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        
+            <a href="<?php echo $link1; ?>" id="logo">
 
-			<div class="entry">
+              <img src=<?php echo '"' . $logo . '"'; ?> alt="curriculum image"  /> 
+          
+            </a>
 
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          
+            <!-- navigation menu -->
+            <ul id="navigation">
+            <?php
+
+              show_menu_left();
+
+              if( count( $sections_menu ) ){
+
+                foreach ( $sections_menu as $id => $section ) {
+                ?>
+                  <li><a href="#<?=$id?>"><?=ot_get_option( $section["settings"]["header_section"]["id"] )?></a></li>
+                <?php
+                }
+              }
+            ?>
+            </ul>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-8 col-md-9 col-lg-8 col-sm-offset-4 col-md-offset-3 col-lg-offset-4" id="container">
+      
+      <div class="container fixed">
+
+        <div id="frame-top-container" class="col-xs-12 col-sm-8 col-md-9 col-lg-8 col-sm-offset-4"></div>
+
+      </div>
+      <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+
+      	<div class="page" id="<?=the_title();?>">
+
+      		<h3 class="page_title"><?=the_title();?></h3>
+      		<div class="page_content">
+      			
 				<?php the_content(); ?>
-
-				<?php wp_link_pages(array('before' => 'Pages: ', 'next_or_number' => 'number')); ?>
 
 			</div>
 
-			<?php edit_post_link('Edit this entry.', '<p>', '</p>'); ?>
-
 		</div>
-		
-		<?php // comments_template(); ?>
 
-		<?php endwhile; endif; ?>
+      <?php endwhile; endif; ?>
+      
+    </div>
 
-<?php get_sidebar(); ?>
-
-<?php get_footer(); ?>
+  </div>
+  
+</div>

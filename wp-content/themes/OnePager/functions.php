@@ -108,7 +108,9 @@
     
     // Registers Menus	
 	if( !function_exists( 'theme_register_menu' ) ) {
+
 		function theme_register_menu() {
+
 			register_nav_menu( 'menu_left', __('Menu lateral') );    	
 		}
 		add_action('init', 'theme_register_menu');	
@@ -124,6 +126,8 @@
 		} 
 	}	
 
+	$logo = get_option('image_curriculum');
+	
 	if( is_plugin_active("option-tree/ot-loader.php" ) ){
 
 		if( !function_exists( 'theme_options_option_tree' ) ) {
@@ -277,8 +281,8 @@
 	include("inc/widget-partners.php");	
 	include("inc/widget-locations.php");
 	include("inc/widget-clients.php");
-	include("inc/widget-ourteam.php");*/
-	include("inc/theme-postmeta.php");
+	include("inc/widget-ourteam.php");
+	include("inc/theme-postmeta.php");*/
 	include("inc/theme-posttypes.php");
 	include("inc/theme-portfoliometa.php");
 	
@@ -288,6 +292,7 @@
 	/*-----------------------------------------------------------------------------------*/
 
 	if ( !function_exists( 'image' ) ) {
+
 	    function image($postid, $imagesize) {
 	        // get the featured image for the post				
 	        $thumbid = 0;
@@ -325,72 +330,74 @@
 	/* Custom Walker for wp_list_categories in template-portfolio.php */
 	/*-----------------------------------------------------------------------------------*/
 
-	class Portfolio_Walker extends Walker_Category {
+	/*class Portfolio_Walker extends Walker_Category {
+
 	    function start_el(&$output, $category, $depth, $args) {
-	            extract($args);
 
-	            $cat_name = esc_attr( $category->name );
-	            $cat_name = apply_filters( 'list_cats', $cat_name, $category );
-	            $link = '<a href="#' . urldecode($category->slug) . '" ';
-	            $link .= 'class="' . urldecode($category->slug) . '" ';
-	            if ( $use_desc_for_title == 0 || empty($category->description) )
-	                    $link .= 'title="' . esc_attr( sprintf(__( 'View all posts filed under %s' ), $cat_name) ) . '"';
-	            else
-	                    $link .= 'title="' . esc_attr( strip_tags( apply_filters( 'category_description', $category->description, $category ) ) ) . '"';
-	            $link .= '>';
-	            $link .= $cat_name . '</a>';
+            extract($args);
 
-	            if ( !empty($feed_image) || !empty($feed) ) {
-                    $link .= ' ';
+            $cat_name = esc_attr( $category->name );
+            $cat_name = apply_filters( 'list_cats', $cat_name, $category );
+            $link = '<a href="#' . urldecode($category->slug) . '" ';
+            $link .= 'class="' . urldecode($category->slug) . '" ';
+            if ( $use_desc_for_title == 0 || empty($category->description) )
+                    $link .= 'title="' . esc_attr( sprintf(__( 'View all posts filed under %s' ), $cat_name) ) . '"';
+            else
+                    $link .= 'title="' . esc_attr( strip_tags( apply_filters( 'category_description', $category->description, $category ) ) ) . '"';
+            $link .= '>';
+            $link .= $cat_name . '</a>';
 
-                    if ( empty($feed_image) )
-                    	$link .= '(';
+            if ( !empty($feed_image) || !empty($feed) ) {
+                $link .= ' ';
 
-                    $link .= '<a href="' . get_term_feed_link( $category->term_id, $category->taxonomy, $feed_type ) . '"';
+                if ( empty($feed_image) )
+                	$link .= '(';
 
-                    if ( empty($feed) ) {
-                    	$alt = ' alt="' . sprintf(__( 'Feed for all posts filed under %s' ), $cat_name ) . '"';
-                    } else {
-                    	$title = ' title="' . $feed . '"';
-                    	$alt = ' alt="' . $feed . '"';
-                    	$name = $feed;
-                    	$link .= $title;
+                $link .= '<a href="' . get_term_feed_link( $category->term_id, $category->taxonomy, $feed_type ) . '"';
+
+                if ( empty($feed) ) {
+                	$alt = ' alt="' . sprintf(__( 'Feed for all posts filed under %s' ), $cat_name ) . '"';
+                } else {
+                	$title = ' title="' . $feed . '"';
+                	$alt = ' alt="' . $feed . '"';
+                	$name = $feed;
+                	$link .= $title;
+                }
+
+                $link .= '>';
+
+                if ( empty($feed_image) )
+                	$link .= $name;
+                else
+                	$link .= "<img src='$feed_image'$alt$title" . ' />';
+
+                $link .= '</a>';
+
+                if ( empty($feed_image) )
+                	$link .= ')';
+            }
+
+            if ( !empty($show_count) )
+                    $link .= ' (' . intval($category->count) . ')';
+
+            if ( !empty($show_date) )
+                    $link .= ' ' . gmdate('Y-m-d', $category->last_update_timestamp);
+
+            if ( 'list' == $args['style'] ) {
+                    $output .= "\t<li";
+                    $class = 'cat-item cat-item-' . $category->term_id;
+                    if ( !empty($current_category) ) {
+                            $_current_category = get_term( $current_category, $category->taxonomy );
+                            if ( $category->term_id == $current_category )
+                                    $class .=  ' current-cat';
+                            elseif ( $category->term_id == $_current_category->parent )
+                                    $class .=  ' current-cat-parent';
                     }
-
-                    $link .= '>';
-
-                    if ( empty($feed_image) )
-                    	$link .= $name;
-                    else
-                    	$link .= "<img src='$feed_image'$alt$title" . ' />';
-
-                    $link .= '</a>';
-
-                    if ( empty($feed_image) )
-                    	$link .= ')';
-	            }
-
-	            if ( !empty($show_count) )
-	                    $link .= ' (' . intval($category->count) . ')';
-
-	            if ( !empty($show_date) )
-	                    $link .= ' ' . gmdate('Y-m-d', $category->last_update_timestamp);
-
-	            if ( 'list' == $args['style'] ) {
-	                    $output .= "\t<li";
-	                    $class = 'cat-item cat-item-' . $category->term_id;
-	                    if ( !empty($current_category) ) {
-	                            $_current_category = get_term( $current_category, $category->taxonomy );
-	                            if ( $category->term_id == $current_category )
-	                                    $class .=  ' current-cat';
-	                            elseif ( $category->term_id == $_current_category->parent )
-	                                    $class .=  ' current-cat-parent';
-	                    }
-	                    //$output .=  ' class="' . $class . '"';
-	                    $output .= ">$link\n";
-	            } else {
-	                    $output .= "\t$link<br />\n";
-	            }
+                    //$output .=  ' class="' . $class . '"';
+                    $output .= ">$link\n";
+            } else {
+                    $output .= "\t$link<br />\n";
+            }
 	    }
 	}
 /*-----------------------------------------------------------------------------------*/

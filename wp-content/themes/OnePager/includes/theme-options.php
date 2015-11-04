@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 function themename_customize_register($wp_customize){
 
