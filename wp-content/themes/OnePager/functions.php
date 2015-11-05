@@ -20,6 +20,9 @@
 
 				wp_enqueue_script('jquery');
 
+				wp_register_script('ie',get_template_directory_uri() . '/js/ie.js',true);
+				wp_enqueue_script('ie');
+
 				wp_register_script('jquery_1.7.1',get_template_directory_uri() . '/js/jquery-1.7.1.min.js',true);
 				wp_enqueue_script('jquery_1.7.1');
 
@@ -70,6 +73,9 @@
 		function registers_css() {
 
 			if( !is_admin() ) {
+
+				wp_register_style('ie-style',get_template_directory_uri() . '/styles/ie.css');
+				wp_enqueue_style('ie-style');
 
 				wp_register_style('fancy-box-style',get_template_directory_uri() . '/styles/fancybox.css');
 				wp_enqueue_style('fancy-box-style');
