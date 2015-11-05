@@ -157,6 +157,7 @@ div.page {
 	padding-top:20px
 }
 div.page_content {
+	width: 100%;
 	padding:25px 0 40px 25px;
 	display: inline-block;
 }
@@ -647,6 +648,7 @@ ul.sublist li a:hover {
 
 /* CSS Custom mio */
 
+/* Option-Tree Group Tags*/
 .group-tags .tag {
 	float: left;
 	margin:5px;
@@ -657,6 +659,7 @@ ul.sublist li a:hover {
 	color: #000000;
 }
 
+/* Option JQuery Knob*/
 .knob-box {
 	margin-bottom: 15px;
 	display: table;
@@ -672,24 +675,52 @@ ul.sublist li a:hover {
 	height: 100px !important;
 }
 
+/* Plugin contact-form-7 */
+.wpcf7-form-control{
+	border-radius: 7px;
+    margin-bottom: 19px;
+    color:#000000;
+}
+input.wpcf7-form-control:not([type="submit"]), textarea.wpcf7-form-control {
+	background-color: #ffffff;
+	width: 100%;
+}
+input.wpcf7-form-control[type="submit"] {
+	width: 100%;
+	background-color: #2c2c2c;
+    color: #ffffff;
+}
+.wpcf7-validation-errors {
+	border: none !important;
+}
+
 /* Media Queries Bootstrap */
 
-/* Large devices */
+/* Large devices lg min-width 1200px */
 
+/* Medium devices md min-width 992px */
 
-/* Medium devices */
+/* Small devices sm min-width 768px */
 
-
-/* Small devices */
+/*Extra Small devices sx max-width 768px */
 
 @media ( max-width: 768px  ) {
 
-	ul#navigation li a{
+	.container {
+		padding: 0px;
+	}
+	ul#navigation li a {
 		text-align: center !important;
 	}
-	#sidebar-fixed{
-		position: initial;
-		width:initial;
-		z-index:initial;
+	#sidebar-fixed {
+		position: static;
+		width:auto;
+		z-index:auto;
+	}
+	div#sidebar {
+		margin-top: 0px;
+	}
+	#logo img {
+		padding-left: 15px;
 	}
 }
