@@ -80,6 +80,10 @@ div#wrap {
 .vertical-max{
 	height: 100%
 }
+.container.fixed {
+	padding-left: 0px;
+	padding-right: 0px;
+}
 #frame-top {
 	position: fixed;
 	height: 32px;
@@ -89,10 +93,13 @@ div#wrap {
 }
 #frame-top-container {
 	height: 15px;
-	margin-left: -10px;
+	margin-left: -15px;
 	background-color: #619ec2;
 	box-shadow: 5px 2px 37px #619ec2;
 	z-index: 1;
+}
+#sidebar-fixed {
+	background-color: #619ec2;
 }
 div#sidebar {
 	background:#2c2c2c;

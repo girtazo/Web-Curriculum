@@ -69,5 +69,5 @@ function _custom_meta_boxes() {
    * Register our meta boxes using the 
    * ot_register_meta_box() function.
    */
-  ot_register_meta_box( $my_meta_box );
+  /*ot_register_meta_box( $my_meta_box );*/
 }

@@ -40,7 +40,7 @@
       
       <div class="container fixed hidden-xs">
 
-        <div id="frame-top-container" class="col-xs-12 col-sm-8 col-md-9 col-lg-8 col-sm-offset-4 hidden-xs"></div>
+        <div id="frame-top-container" class="col-xs-12 col-sm-8 col-md-9 col-lg-8 hidden-xs"></div>
 
       </div>
       <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
