@@ -677,13 +677,18 @@ ul.sublist li a:hover {
 
 /* Plugin contact-form-7 */
 .wpcf7-form-control{
-	border-radius: 7px;
     margin-bottom: 19px;
     color:#000000;
+    border-radius: 7px;
 }
 input.wpcf7-form-control:not([type="submit"]), textarea.wpcf7-form-control {
 	background-color: #ffffff;
 	width: 100%;
+	border: 2px solid #195F88;
+}
+input.wpcf7-form-control:not([type="submit"]):focus, textarea.wpcf7-form-control:focus {
+	outline: none;
+    border: 2px solid #000000;
 }
 input.wpcf7-form-control[type="submit"] {
 	width: 100%;
@@ -693,6 +698,7 @@ input.wpcf7-form-control[type="submit"] {
 .wpcf7-validation-errors {
 	border: none !important;
 }
+
 
 /* Media Queries Bootstrap */
 
