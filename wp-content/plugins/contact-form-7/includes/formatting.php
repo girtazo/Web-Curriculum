@@ -30,7 +30,7 @@ function wpcf7_autop( $pee, $br = 1 ) {
 	$pee = '';
 
 	foreach ( $pees as $tinkle ) {
-		$pee .= '<p>' . trim( $tinkle, "\n" ) . "</p>\n";
+		$pee .= trim( $tinkle, "\n" ) . "\n";
 	}
 
 	$pee = preg_replace( '|<p>\s*</p>|', '', $pee ); // under certain strange conditions it could create a P of entirely whitespace

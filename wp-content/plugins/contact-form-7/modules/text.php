@@ -44,6 +44,7 @@ function wpcf7_text_shortcode_handler( $tag ) {
 	}
 
 	$atts['class'] = $tag->get_class_option( $class );
+	$atts['class'] .= ' ' . sanitize_html_class( $tag->name );
 	$atts['id'] = $tag->get_id_option();
 	$atts['tabindex'] = $tag->get_option( 'tabindex', 'int', true );
 
@@ -79,8 +80,8 @@ function wpcf7_text_shortcode_handler( $tag ) {
 	$atts = wpcf7_format_atts( $atts );
 
 	$html = sprintf(
-		'<span class="wpcf7-form-control-wrap %1$s"><input %2$s />%3$s</span>',
-		sanitize_html_class( $tag->name ), $atts, $validation_error );
+		'<input %1$s />%2$s',
+		$atts, $validation_error );
 
 	return $html;
 }
