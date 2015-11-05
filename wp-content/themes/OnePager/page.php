@@ -28,19 +28,7 @@
           
             <!-- navigation menu -->
             <ul id="navigation">
-            <?php
-
-              show_menu_left();
-
-              if( count( $sections_menu ) ){
-
-                foreach ( $sections_menu as $id => $section ) {
-                ?>
-                  <li><a href="#<?=$id?>"><?=ot_get_option( $section["settings"]["header_section"]["id"] )?></a></li>
-                <?php
-                }
-              }
-            ?>
+            <?php show_menu_left(); ?>
             </ul>
 
           </div>
@@ -50,9 +38,9 @@
     </div>
     <div class="col-xs-12 col-sm-8 col-md-9 col-lg-8 col-sm-offset-4 col-md-offset-3 col-lg-offset-4" id="container">
       
-      <div class="container fixed">
+      <div class="container fixed hidden-xs">
 
-        <div id="frame-top-container" class="col-xs-12 col-sm-8 col-md-9 col-lg-8 col-sm-offset-4"></div>
+        <div id="frame-top-container" class="col-xs-12 col-sm-8 col-md-9 col-lg-8 col-sm-offset-4 hidden-xs"></div>
 
       </div>
       <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
